@@ -29,7 +29,7 @@ public class Character extends Thing {
         setFilePath("Data/Characters/");
     }
 
-    private void animate()
+    public void animate()
     {
         if (frame == 0) frame = 1;
         else if(frame == 1) frame = 0;

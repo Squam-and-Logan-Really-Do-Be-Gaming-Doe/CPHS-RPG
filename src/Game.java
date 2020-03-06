@@ -1,3 +1,5 @@
+import com.sun.webkit.dom.RangeImpl;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -109,6 +111,19 @@ public class Game {
         scanRoom("test");
         cRoom.drawRoom();
         StdDraw.show();
+        int frame = 0;
+        while(true)
+        {
+            if (frame == 30)
+            {
+                frame = 0;
+                cRoom.animate();
+                cRoom.drawRoom();
+            }
+            goodSleep();
+            StdDraw.show();
+            frame ++;
+        }
     }
 
     private void fileRead(int slot)

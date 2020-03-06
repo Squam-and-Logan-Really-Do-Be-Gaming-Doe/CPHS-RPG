@@ -24,7 +24,7 @@ public class Room {
         for (Tile temp : tiles) {
             temp.draw(scale);
         }
-        drawNPCs(160);
+        drawNPCs(scale);
     }
 
     public ArrayList<Character> getNPCs() {
@@ -42,5 +42,11 @@ public class Room {
         }
     }
 
+    public void animate()
+    {
+        for (Character cha : NPCs) {
+            cha.animate();
+        }
+    }
 
 }
