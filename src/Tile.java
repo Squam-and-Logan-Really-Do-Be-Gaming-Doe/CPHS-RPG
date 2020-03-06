@@ -1,4 +1,4 @@
-public class Tile extends Object {
+public class Tile extends Thing {
 
     public Tile(Position pos, String image) {
         super.setPos(pos);

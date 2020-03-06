@@ -14,7 +14,9 @@ public class Game {
     private final int right = 39;
 
     private Room cRoom;
-
+    private int chapter;
+    private String nameChapter;
+    private String timeFrame;
     public Game()
     {
         StdDraw.enableDoubleBuffering();
@@ -103,11 +105,24 @@ public class Game {
         {
             fileSetup(selector);
         }
+        fileRead(selector);
+        scanRoom("test");
+        cRoom.drawRoom();
+        StdDraw.show();
+        System.out.println(cRoom);
     }
 
     private void fileRead(int slot)
     {
-        
+        try {
+            Scanner file = new Scanner(new File("Data/Saves/save" + slot + ".dat"));
+            file.next();
+            chapter = file.nextInt();
+            nameChapter = file.nextLine();
+            timeFrame = file.nextLine();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     private void fileSetup(int slot)
     {

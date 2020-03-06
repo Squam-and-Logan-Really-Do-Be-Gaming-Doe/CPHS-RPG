@@ -1,12 +1,12 @@
-public class Object extends Position {
+public class Thing extends Position {
     private String image;
 
-    public Object() {
+    public Thing() {
         super(0,0,0);
         image = "";
     }
 
-    public Object(Position pos, String image) {
+    public Thing(Position pos, String image) {
         super(pos);
         this.image = image;
     }
