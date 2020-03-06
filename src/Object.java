@@ -1,23 +1,14 @@
-public class Object {
-    private Position pos;
+public class Object extends Position {
     private String image;
 
     public Object() {
-        pos = new Position();
+        super(0,0,0);
         image = "";
     }
 
     public Object(Position pos, String image) {
-        this.pos = pos;
+        super(pos);
         this.image = image;
-    }
-
-    public Position getPos() {
-        return pos;
-    }
-
-    public void setPos(Position pos) {
-        this.pos = pos;
     }
 
     public String getImage() {

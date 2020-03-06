@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
@@ -10,6 +12,9 @@ public class Game {
     private final int down = 40;
     private final int left = 37;
     private final int right = 39;
+
+    private Room cRoom;
+
     public Game()
     {
         StdDraw.enableDoubleBuffering();
@@ -100,11 +105,11 @@ public class Game {
         }
     }
 
-    public void fileRead(int slot)
+    private void fileRead(int slot)
     {
-
+        
     }
-    public void fileSetup(int slot)
+    private void fileSetup(int slot)
     {
         try {
             File file = new File("Data/Saves/save" + slot + ".dat");
@@ -128,11 +133,24 @@ public class Game {
 
     }
 
-
-
-
-
-
+    private void scanRoom(String roomName)
+    {
+        try {
+            //fRoom means File-Room
+            Scanner fRoom = new Scanner(new File("Data/Rooms/" + roomName + ".dat"));
+            ArrayList<Tile> tiles = new ArrayList<Tile>();
+            while(fRoom.hasNextLine())
+            {
+                String name = fRoom.next();
+                int x = fRoom.nextInt();
+                int y = fRoom.nextInt();
+                tiles.add(new Tile(x,y,0, name));
+            }
+            cRoom = new Room(tiles);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void goodSleep()
     {

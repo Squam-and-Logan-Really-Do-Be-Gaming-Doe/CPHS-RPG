@@ -13,6 +13,12 @@ public class Position {
         this.yPos = yPos;
         this.zPos = zPos;
     }
+    public Position(Position pos)
+    {
+        xPos = pos.getxPos();
+        yPos = pos.getyPos();
+        zPos = pos.getzPos();
+    }
     public int getxPos() {
         return xPos;
     }
@@ -30,6 +36,17 @@ public class Position {
     }
     public void setzPos(int zPos) {
         this.zPos = zPos;
+    }
+
+    public void setPos(Position pos)
+    {
+        xPos = pos.getxPos();
+        yPos = pos.getyPos();
+        zPos = pos.getzPos();
+    }
+    public Position getPos()
+    {
+        return new Position(xPos, yPos, zPos);
     }
 
     @Override
