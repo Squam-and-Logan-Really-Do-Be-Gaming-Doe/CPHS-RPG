@@ -109,7 +109,6 @@ public class Game {
         scanRoom("test");
         cRoom.drawRoom();
         StdDraw.show();
-        System.out.println(cRoom);
     }
 
     private void fileRead(int slot)
@@ -157,11 +156,23 @@ public class Game {
             while(fRoom.hasNextLine())
             {
                 String name = fRoom.next();
+                if(name.equals("Δ")) break;
                 int x = fRoom.nextInt();
                 int y = fRoom.nextInt();
                 tiles.add(new Tile(x,y,0, name));
             }
             cRoom = new Room(tiles);
+            ArrayList<Character> chars = new ArrayList<>();
+            fRoom.nextLine();
+            while(fRoom.hasNextLine())
+            {
+                String name = fRoom.next();
+                int x = fRoom.nextInt();
+                int y = fRoom.nextInt();
+                String direc = fRoom.next();
+                chars.add(new Character(x,y,name,direc));
+            }
+            cRoom.setNPCs(chars);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

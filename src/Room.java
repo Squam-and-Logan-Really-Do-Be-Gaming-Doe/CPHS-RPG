@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Room {
     Tile[] tiles;
+    ArrayList<Character> NPCs;
 
     public Room(Tile[] tiles) {
         this.tiles = tiles;
@@ -21,16 +22,25 @@ public class Room {
     {
         int scale = 160;
         for (Tile temp : tiles) {
-            Position pos = temp.getPos();
-            StdDraw.picture(pos.getxPos()*scale+scale/2.0, pos.getyPos()*scale+scale/2.0, "Data/Tiles/" + temp.getImage() + ".png", scale, scale);
+            temp.draw(scale);
+        }
+        drawNPCs(160);
+    }
+
+    public ArrayList<Character> getNPCs() {
+        return NPCs;
+    }
+
+    public void setNPCs(ArrayList<Character> NPCs) {
+        this.NPCs = NPCs;
+    }
+
+    private void drawNPCs(int scale)
+    {
+        for (Character guy : NPCs) {
+            guy.draw(scale);
         }
     }
 
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "tiles=" + Arrays.toString(tiles) +
-                '}';
-    }
 }
