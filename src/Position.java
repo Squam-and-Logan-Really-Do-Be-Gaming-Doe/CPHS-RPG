@@ -31,4 +31,13 @@ public class Position {
     public void setzPos(int zPos) {
         this.zPos = zPos;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "xPos=" + xPos +
+                ", yPos=" + yPos +
+                ", zPos=" + zPos +
+                '}';
+    }
 }
