@@ -49,12 +49,15 @@ public class Game {
         for (int i = 0; i < 1000; i+=10) {
             StdDraw.setPenColor(Color.black);
             if(i <= 920)StdDraw.text(640,360+i, "CPHS-RPG");
+            if(i >= 355)
             for (int j = 0; j < 3; j++) {
                 //1000-540 = 460 - 100 = 360
-                StdDraw.setPenColor(Color.black);
-                StdDraw.filledRectangle(640,-440+i-(j*200), 210, 85);
-                StdDraw.setPenColor(Color.gray);
-                StdDraw.filledRectangle(640,-440+i-(j*200), 200, 75);
+                if(-440+i-(j*200)+85 >= 0) {
+                    StdDraw.setPenColor(Color.black);
+                    StdDraw.filledRectangle(640, -440 + i - (j * 200), 210, 85);
+                    StdDraw.setPenColor(Color.gray);
+                    StdDraw.filledRectangle(640, -440 + i - (j * 200), 200, 75);
+                }
             }
             StdDraw.show();
             StdDraw.clear();
@@ -88,7 +91,6 @@ public class Game {
                     StdDraw.setPenColor(Color.black);
                     StdDraw.text(640, 560 - (j * 200), files[j]);
                 }
-                oldSelector = selector;
             }
             if (StdDraw.isKeyPressed(up) && !yopoU) selector--;
             if (StdDraw.isKeyPressed(down) && !yopoD) selector++;
