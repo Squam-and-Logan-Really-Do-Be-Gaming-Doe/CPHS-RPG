@@ -172,7 +172,7 @@ public class Game {
         try {
             //fRoom means File-Room
             Scanner fRoom = new Scanner(new File("Data/Rooms/" + roomName + ".dat"));
-            ArrayList<Tile> tiles = new ArrayList<Tile>();
+            ArrayList<Tile> tiles = new ArrayList<>();
             Room newRoom;
             while(fRoom.hasNextLine())
             {

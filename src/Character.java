@@ -41,4 +41,8 @@ public class Character extends Thing {
         super.draw(scale);
         extensionAndPath();
     }
+
+
+
+
 }
