@@ -48,7 +48,7 @@ public class Stats {
     {
         return stats[1];
     }
-    return int getSP()
+    public int getSP()
     {
         return stats[2];
     }
@@ -59,6 +59,12 @@ public class Stats {
     public int getDef()
     {
         return stats[4];
+    }
+    public int getSpeed(){
+        return stats[5];
+    }
+    public int getLuck(){
+        return stats[6];
     }
 
 

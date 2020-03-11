@@ -1,6 +1,7 @@
 public class Character extends Thing {
     private String direction;
     private int frame;
+    Stats stats;
     public Character(int x, int y, String image, String direction) {
         super(x, y, 1, image);
         this.direction = direction;

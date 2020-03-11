@@ -17,6 +17,7 @@ public class Game {
     private int chapter;
     private String nameChapter;
     private String timeFrame;
+    private PChar player;
     public Game()
     {
         StdDraw.enableDoubleBuffering();
@@ -109,6 +110,11 @@ public class Game {
         }
         fileRead(selector);
         //scanRoom("test");
+        roomHandler();
+    }
+
+    private void roomHandler()
+    {
         cRoom.drawRoom();
         StdDraw.show();
         int frame = 0;
@@ -119,7 +125,13 @@ public class Game {
                 frame = 0;
                 cRoom.animate();
                 cRoom.drawRoom();
+                player.animate();
             }
+            if(player.moveIt())
+            {
+                cRoom.drawRoom();
+            }
+            player.draw(160);
             goodSleep();
             StdDraw.show();
             frame ++;
@@ -136,6 +148,7 @@ public class Game {
             nameChapter = file.nextLine();
             timeFrame = file.nextLine();
             cRoom = scanRoom(file.nextLine());
+            player = new PChar(0,1,"testy", "U");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
