@@ -1,5 +1,3 @@
-import com.sun.webkit.dom.RangeImpl;
-
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +17,7 @@ public class Game {
     private int chapter;
     private String nameChapter;
     private String timeFrame;
+    private PChar player;
     public Game()
     {
         StdDraw.enableDoubleBuffering();
@@ -51,12 +50,15 @@ public class Game {
         for (int i = 0; i < 1000; i+=10) {
             StdDraw.setPenColor(Color.black);
             if(i <= 920)StdDraw.text(640,360+i, "CPHS-RPG");
+            if(i >= 355)
             for (int j = 0; j < 3; j++) {
                 //1000-540 = 460 - 100 = 360
-                StdDraw.setPenColor(Color.black);
-                StdDraw.filledRectangle(640,-440+i-(j*200), 210, 85);
-                StdDraw.setPenColor(Color.gray);
-                StdDraw.filledRectangle(640,-440+i-(j*200), 200, 75);
+                if(-440+i-(j*200)+85 >= 0) {
+                    StdDraw.setPenColor(Color.black);
+                    StdDraw.filledRectangle(640, -440 + i - (j * 200), 210, 85);
+                    StdDraw.setPenColor(Color.gray);
+                    StdDraw.filledRectangle(640, -440 + i - (j * 200), 200, 75);
+                }
             }
             StdDraw.show();
             StdDraw.clear();
@@ -90,7 +92,6 @@ public class Game {
                     StdDraw.setPenColor(Color.black);
                     StdDraw.text(640, 560 - (j * 200), files[j]);
                 }
-                oldSelector = selector;
             }
             if (StdDraw.isKeyPressed(up) && !yopoU) selector--;
             if (StdDraw.isKeyPressed(down) && !yopoD) selector++;
@@ -108,7 +109,12 @@ public class Game {
             fileSetup(selector);
         }
         fileRead(selector);
-        scanRoom("test");
+        //scanRoom("test");
+        roomHandler();
+    }
+
+    private void roomHandler()
+    {
         cRoom.drawRoom();
         StdDraw.show();
         int frame = 0;
@@ -119,7 +125,13 @@ public class Game {
                 frame = 0;
                 cRoom.animate();
                 cRoom.drawRoom();
+                player.animate();
             }
+            if(player.moveIt())
+            {
+                cRoom.drawRoom();
+            }
+            player.draw(160);
             goodSleep();
             StdDraw.show();
             frame ++;
@@ -132,8 +144,11 @@ public class Game {
             Scanner file = new Scanner(new File("Data/Saves/save" + slot + ".dat"));
             file.next();
             chapter = file.nextInt();
+            file.nextLine();
             nameChapter = file.nextLine();
             timeFrame = file.nextLine();
+            cRoom = scanRoom(file.nextLine());
+            player = new PChar(0,1,"testy", "U");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -145,7 +160,7 @@ public class Game {
 
             //Create the file
             if (file.createNewFile()) {
-                //System.out.println("File is created!");
+                System.out.println("File is created!");
             } else {
                 System.out.println("File already exists.");
             }
@@ -155,19 +170,23 @@ public class Game {
             writer.write("Chapter 1");
             writer.write("\n");
             writer.write("This is Cedar Park");
+            writer.write("\n");
             writer.write("Beginning");
+            writer.write("\n");
+            writer.write("test");
             writer.close();
         } catch (Exception e) { e.printStackTrace(); }
 
 
     }
 
-    private void scanRoom(String roomName)
+    private Room scanRoom(String roomName)
     {
         try {
             //fRoom means File-Room
             Scanner fRoom = new Scanner(new File("Data/Rooms/" + roomName + ".dat"));
-            ArrayList<Tile> tiles = new ArrayList<Tile>();
+            ArrayList<Tile> tiles = new ArrayList<>();
+            Room newRoom;
             while(fRoom.hasNextLine())
             {
                 String name = fRoom.next();
@@ -176,7 +195,7 @@ public class Game {
                 int y = fRoom.nextInt();
                 tiles.add(new Tile(x,y,0, name));
             }
-            cRoom = new Room(tiles);
+            newRoom = new Room(tiles);
             ArrayList<Character> chars = new ArrayList<>();
             fRoom.nextLine();
             while(fRoom.hasNextLine())
@@ -187,9 +206,12 @@ public class Game {
                 String direc = fRoom.next();
                 chars.add(new Character(x,y,name,direc));
             }
-            cRoom.setNPCs(chars);
+            newRoom.setNPCs(chars);
+            fRoom.close();
+            return newRoom;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return new Room();
         }
     }
 

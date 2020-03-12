@@ -6,6 +6,12 @@ public class Room {
     Tile[] tiles;
     ArrayList<Character> NPCs;
 
+    public Room()
+    {
+        tiles = new Tile[0];
+        NPCs = new ArrayList<>();
+    }
+
     public Room(Tile[] tiles) {
         this.tiles = tiles;
     }
