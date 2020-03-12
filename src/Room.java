@@ -26,11 +26,14 @@ public class Room {
 
     public void drawRoom()
     {
-        int scale = 160;
+        int scale = Game.getScale();
+        int[] mins = getStartPos();
+        //15 x - spaces in a room
+        //9 y - spaces in a room
         for (Tile temp : tiles) {
-            temp.draw(scale);
+            temp.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
         }
-        drawNPCs(scale);
+        drawNPCs(scale, mins);
     }
 
     public ArrayList<Character> getNPCs() {
@@ -47,6 +50,13 @@ public class Room {
             guy.draw(scale);
         }
     }
+    private void drawNPCs(int scale, int[] mins)
+    {
+        for (Character guy : NPCs) {
+            //System.out.println(guy.getxPos() + ", " + guy.getyPos() + " vs " + ((15.0-mins[0])/2)*guy.getxPos());
+            guy.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
+        }
+    }
 
     public void animate()
     {
@@ -54,5 +64,22 @@ public class Room {
             cha.animate();
         }
     }
+
+    public int[] getStartPos()
+    {
+        int minX = -1;
+        int minY = -1;
+        int[] mins = new int[2];
+        for (Tile temp :
+                tiles) {
+            if(temp.getxPos() > minX) minX = temp.getxPos();
+            if(temp.getyPos() > minY) minY = temp.getyPos();
+        }
+        mins[0] = minX;
+        mins[1] = minY;
+        //System.out.println(Arrays.toString(mins));
+        return mins;
+    }
+
 
 }

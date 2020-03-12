@@ -43,6 +43,15 @@ public class Character extends Thing {
         extensionAndPath();
     }
 
+    public void draw(int scale, double xMin, double yMin)
+    {
+        setExtension(getFrame() + getDirection() + getExtension());
+        //System.out.println(getExtension());
+        super.draw(getxPos()*scale+scale/2+xMin*scale,getyPos()*scale+scale/2+yMin*scale,scale, getFilePath() + getImage() + getExtension());
+        extensionAndPath();
+    }
+
+
 
 
 

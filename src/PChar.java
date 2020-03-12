@@ -78,4 +78,27 @@ public class PChar extends Character {
         StdDraw.picture(modX*scale+scale/2, modY*scale+scale/2, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension() , scale, scale);
     }
 
+    public void draw(int scale, double xMin, double yMin)
+    {
+        double modX = getxPos();
+        double modY = getyPos();
+        switch (getDirection()) {
+            case "U":
+                modY += movFactor;
+                break;
+            case "D":
+                modY -= movFactor;
+                break;
+            case "L":
+                modX -= movFactor;
+                break;
+            case "R":
+                modX += movFactor;
+                break;
+        }
+        //System.out.println(getExtension());
+        super.draw(modX*scale+scale/2+xMin*scale,modY*scale+scale/2+yMin*scale,scale, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension());
+    }
+
+
 }

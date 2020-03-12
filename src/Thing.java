@@ -51,4 +51,16 @@ public class Thing extends Position {
     {
         StdDraw.picture(getxPos()*scale+scale/2, getyPos()*scale+scale/2, getFilePath() + getImage() + getExtension(), scale, scale);
     }
+
+    public void draw(int scale, double minX, double minY)
+    {
+        StdDraw.picture(getxPos()*scale+scale/2+minX*scale, getyPos()*scale+scale/2+minY*scale, getFilePath() + getImage() + getExtension(), scale, scale);
+    }
+
+    public void draw(double xPos, double yPos, double scale, String filepath)
+    {
+        StdDraw.picture(xPos, yPos, filepath, scale, scale);
+    }
+
+
 }

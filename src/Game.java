@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Game {
 
+    private static int scale = 80;
+
     private final int confirm = 88;
     private final int up = 38;
     private final int down = 40;
@@ -131,7 +133,8 @@ public class Game {
             {
                 cRoom.drawRoom();
             }
-            player.draw(160);
+            int[] mins = cRoom.getStartPos();
+            player.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
             goodSleep();
             StdDraw.show();
             frame ++;
@@ -226,5 +229,7 @@ public class Game {
         }
     }
 
-
+    public static int getScale() {
+        return scale;
+    }
 }
