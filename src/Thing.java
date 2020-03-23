@@ -43,6 +43,15 @@ public class Thing extends Position {
         this.extension = extension;
     }
 
+    public boolean willCollide(Thing t)
+    {
+        if(getxPos() == t.getxPos() && getyPos() == t.getyPos())
+        {
+            if(getzPos() <= t.getzPos()) return true;
+        }
+        return false;
+    }
+
     public void draw()
     {
         StdDraw.picture(getxPos(), getyPos(), getImage());

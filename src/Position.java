@@ -49,6 +49,11 @@ public class Position {
         return new Position(xPos, yPos, zPos);
     }
 
+    public String printPos()
+    {
+       return("X: " + getxPos() + ",Y: " + getyPos() + ", Z: " + getzPos() );
+    }
+
     @Override
     public String toString() {
         return "Position{" +

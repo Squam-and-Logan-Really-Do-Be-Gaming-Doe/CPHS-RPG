@@ -141,8 +141,9 @@ public class Game {
                 cRoom.drawRoom();
                 player.animate();
             }
-            if(player.moveIt())
+            if(player.moveIt(cRoom))
             {
+                //System.out.println(player.printPos());
                 cRoom.drawRoom();
             }
             int[] mins = cRoom.getStartPos();
