@@ -206,6 +206,22 @@ public class Game {
             while(fRoom.hasNextLine())
             {
                 String name = fRoom.next();
+                if(name.equals("α"))
+                {
+                    fRoom.next();
+                    String tileName = fRoom.next();
+                    int startX = fRoom.nextInt();
+                    int startY = fRoom.nextInt();
+                    int endX = fRoom.nextInt();
+                    int endY = fRoom.nextInt();
+                    for (int i = startX; i <= endX; i++) {
+                        for (int j = startY; j <= endY; j++) {
+                            tiles.add(new Tile(i,j,0, tileName));
+                        }
+                    }
+                    continue;
+
+                }
                 if(name.equals("Δ")) break;
                 int x = fRoom.nextInt();
                 int y = fRoom.nextInt();

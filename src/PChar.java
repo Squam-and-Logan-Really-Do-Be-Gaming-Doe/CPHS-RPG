@@ -60,6 +60,7 @@ public class PChar extends Character {
                 if(willCollide(cRoom.NPCs.get(i), smoth))
                 {
                     moving = false;
+                    movFactor = 0;
                     break;
                 }
             }
@@ -68,6 +69,7 @@ public class PChar extends Character {
                 if(willCollide(cRoom.tiles[i], smoth))
                 {
                     moving = false;
+                    movFactor = 0;
                     break;
                 }
             }
