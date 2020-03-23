@@ -9,12 +9,12 @@ public class Game {
 
     private static int scale = 80;
 
-    private final int confirm = 88;
-    private final int cancel = 90;
-    private final int up = 38;
-    private final int down = 40;
-    private final int left = 37;
-    private final int right = 39;
+    public static final int confirm = 88;
+    public static final int cancel = 90;
+    public static final int up = 38;
+    public static final int down = 40;
+    public static final int left = 37;
+    public static final int right = 39;
 
     private Room cRoom;
     private int chapter;
