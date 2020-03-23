@@ -27,7 +27,11 @@ public class PChar extends Character {
         }
         else
         {
-            movFactor += .02;
+            if(StdDraw.isKeyPressed(Game.cancel))
+            {
+                movFactor += .04;
+            }
+            movFactor += .04;
             if(movFactor >= 1)
             {
                 movFactor = 0;
