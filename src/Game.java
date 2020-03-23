@@ -10,6 +10,7 @@ public class Game {
     private static int scale = 80;
 
     private final int confirm = 88;
+    private final int cancel = 90;
     private final int up = 38;
     private final int down = 40;
     private final int left = 37;
@@ -29,6 +30,7 @@ public class Game {
 
 
         titleScreen();
+        roomHandler();
     }
 
     private void titleScreen()
@@ -79,31 +81,28 @@ public class Game {
         int selector = 0;
         int oldSelector = 1;
         boolean yopoC = true;
+        boolean yopoB = true;
         boolean yopoU = false;
         boolean yopoD = false;
-        while (true) {
-            if (StdDraw.isKeyPressed(confirm) && !yopoC) break;
-            if (oldSelector != selector) {
-                for (int j = 0; j < 3; j++) {
-                    //1000-540 = 460 - 100 = 360
-                    if (selector == j) StdDraw.setPenColor(Color.red);
-                    else StdDraw.setPenColor(Color.black);
-                    StdDraw.filledRectangle(640, 560 - (j * 200), 210, 85);
-                    StdDraw.setPenColor(Color.gray);
-                    StdDraw.filledRectangle(640, 560 - (j * 200), 200, 75);
-                    StdDraw.setPenColor(Color.black);
-                    StdDraw.text(640, 560 - (j * 200), files[j]);
-                }
+        while ((!StdDraw.isKeyPressed(confirm) || yopoC) && (!StdDraw.isKeyPressed(cancel) || yopoC)) {
+
+            if (StdDraw.isKeyPressed(38) && !yopoU) {
+                selector--;
             }
-            if (StdDraw.isKeyPressed(up) && !yopoU) selector--;
-            if (StdDraw.isKeyPressed(down) && !yopoD) selector++;
-            if (selector < 0) selector = files.length - 1;
-            if (selector > files.length - 1) selector = 0;
-            StdDraw.show();
+            if (StdDraw.isKeyPressed(40) && !yopoD) {
+                selector++;
+            }
+
+            if (selector > 2) selector = 0;
+            if (selector < 0) selector = 2;
+
+            yopoU = StdDraw.isKeyPressed(38);
+            yopoD = StdDraw.isKeyPressed(40);
             yopoC = StdDraw.isKeyPressed(confirm);
-            yopoU = StdDraw.isKeyPressed(up);
-            yopoD = StdDraw.isKeyPressed(down);
-            goodSleep();
+            yopoB = StdDraw.isKeyPressed(cancel);
+            drawFiles(selector, files);
+            StdDraw.show();
+            StdDraw.clear();
         }
         //System.out.println("break");
         if(files[selector].equals("New File"))
@@ -112,7 +111,20 @@ public class Game {
         }
         fileRead(selector);
         //scanRoom("test");
-        roomHandler();
+    }
+
+    private void drawFiles(int selector, String[] info)
+    {
+        for (int j = 0; j < 3; j++) {
+            //1000-540 = 460 - 100 = 360
+            if (selector == j) StdDraw.setPenColor(Color.red);
+            else StdDraw.setPenColor(Color.black);
+            StdDraw.filledRectangle(640, 560 - (j * 200), 210, 85);
+            StdDraw.setPenColor(Color.gray);
+            StdDraw.filledRectangle(640, 560 - (j * 200), 200, 75);
+            StdDraw.setPenColor(Color.black);
+            StdDraw.text(640, 560 - (j * 200), info[j]);
+        }
     }
 
     private void roomHandler()
