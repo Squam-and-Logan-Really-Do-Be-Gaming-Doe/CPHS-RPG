@@ -7,8 +7,8 @@ public class Room {
     private ArrayList<Character> NPCs;
     private boolean scrollX;
     private boolean scrollY;
-    private int camXMod = 0;
-    private int camYMod = 0;
+    private double camXMod = 0;
+    private double camYMod = 0;
 
     public Room()
     {
@@ -31,7 +31,7 @@ public class Room {
     public void drawRoom()
     {
         int scale = Game.getScale();
-        int[] mins = getStartPos();
+        int[] mins = getMaxPos();
         //15 x - spaces in a room
         //9 y - spaces in a room
         for (Tile temp : tiles) {
@@ -48,6 +48,35 @@ public class Room {
         return tiles;
     }
 
+    public boolean isScrollX() {
+        return scrollX;
+    }
+
+    public boolean isScrollY() {
+        return scrollY;
+    }
+
+    public boolean isScroll()
+    {
+        return scrollX || scrollY;
+    }
+
+    public void determineScroll()
+    {
+        scrollX = false; scrollY = false;
+        int[] both = maxAndMin();
+
+        int min = both[0];
+        int max = both[2];
+        if(max-min>15) scrollX = true;
+
+        min = both[1];
+        max = both[3];
+
+        if(max-min>9) scrollY = true;
+
+    }
+
     public void setNPCs(ArrayList<Character> NPCs) {
         this.NPCs = NPCs;
     }
@@ -58,6 +87,8 @@ public class Room {
             guy.draw(scale);
         }
     }
+
+
     private void drawNPCs(int scale, int[] mins)
     {
         for (Character guy : NPCs) {
@@ -73,7 +104,7 @@ public class Room {
         }
     }
 
-    public int[] getStartPos()
+    public int[] getMaxPos()
     {
 
         int maxX = -1;
@@ -89,6 +120,48 @@ public class Room {
         //System.out.println(Arrays.toString(maxs));
         return maxs;
     }
+    public int[] getMinPos()
+    {
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int[] mins = new int[2];
+        for (Tile temp :
+                tiles) {
+            if(temp.getxPos() < minX) minX = temp.getxPos();
+            if(temp.getyPos() < minY) minY = temp.getyPos();
+        }
+        mins[0] = minX;
+        mins[1] = minY;
+        //System.out.println(Arrays.toString(maxs));
+        return mins;
+    }
 
+    public int[] maxAndMin()
+    {
+        int[] mins = getMinPos();
+        int[] maxs = getMaxPos();
+        int[] both = new int[4];
 
+        both[0] = mins[0];
+        both[1] = mins[1];
+        both[2] = mins[0];
+        both[3] = mins[1];
+
+        return both;
+    }
+
+    public void scrollModifier(PChar chara)
+    {
+        double[] smoth = chara.smoother();
+        int[] both = maxAndMin();
+        double charX = chara.getxPos()+ smoth[0];
+        double charY = chara.getyPos()+ smoth[1];
+        if(scrollX)
+        {
+            int minX = both[0];
+            int maxX = both[2];
+            int difference = maxX-minX;
+            
+        }
+    }
 }

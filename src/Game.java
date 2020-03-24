@@ -79,7 +79,6 @@ public class Game {
             }
         }
         int selector = 0;
-        int oldSelector = 1;
         boolean yopoC = true;
         boolean yopoB = true;
         boolean yopoU = false;
@@ -146,7 +145,7 @@ public class Game {
                 //System.out.println(player.printPos());
                 cRoom.drawRoom();
             }
-            int[] mins = cRoom.getStartPos();
+            int[] mins = cRoom.getMaxPos();
             player.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
             goodSleep();
             StdDraw.show();
@@ -240,6 +239,7 @@ public class Game {
             }
             newRoom.setNPCs(chars);
             fRoom.close();
+            newRoom.determineScroll();
             return newRoom;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

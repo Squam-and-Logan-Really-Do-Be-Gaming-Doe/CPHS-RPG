@@ -104,7 +104,7 @@ public class PChar extends Character {
         return new double[]{modX, modY};
     }
 
-    private double[] smoother()
+    public double[] smoother()
     {
         double modX = getxPos();
         double modY = getyPos();
