@@ -56,8 +56,8 @@ public class PChar extends Character {
         //System.out.println(moving);
         double[] smoth = mods();
         if(moving)
-            for (int i = 0; i < cRoom.NPCs.size(); i++) {
-                if(willCollide(cRoom.NPCs.get(i), smoth))
+            for (int i = 0; i < cRoom.getNPCs().size(); i++) {
+                if(willCollide(cRoom.getNPCs().get(i), smoth))
                 {
                     moving = false;
                     movFactor = 0;
@@ -65,8 +65,8 @@ public class PChar extends Character {
                 }
             }
         if(moving)
-            for (int i = 0; i < cRoom.tiles.length; i++) {
-                if(willCollide(cRoom.tiles[i], smoth))
+            for (int i = 0; i < cRoom.getTiles().length; i++) {
+                if(willCollide(cRoom.getTiles()[i], smoth))
                 {
                     moving = false;
                     movFactor = 0;

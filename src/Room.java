@@ -3,8 +3,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Room {
-    Tile[] tiles;
-    ArrayList<Character> NPCs;
+    private Tile[] tiles;
+    private ArrayList<Character> NPCs;
+    private boolean scrollX;
+    private boolean scrollY;
+    private int camXMod = 0;
+    private int camYMod = 0;
 
     public Room()
     {
@@ -40,6 +44,10 @@ public class Room {
         return NPCs;
     }
 
+    public Tile[] getTiles() {
+        return tiles;
+    }
+
     public void setNPCs(ArrayList<Character> NPCs) {
         this.NPCs = NPCs;
     }
@@ -67,18 +75,19 @@ public class Room {
 
     public int[] getStartPos()
     {
-        int minX = -1;
-        int minY = -1;
-        int[] mins = new int[2];
+
+        int maxX = -1;
+        int maxY = -1;
+        int[] maxs = new int[2];
         for (Tile temp :
                 tiles) {
-            if(temp.getxPos() > minX) minX = temp.getxPos();
-            if(temp.getyPos() > minY) minY = temp.getyPos();
+            if(temp.getxPos() > maxX) maxX = temp.getxPos();
+            if(temp.getyPos() > maxY) maxY = temp.getyPos();
         }
-        mins[0] = minX;
-        mins[1] = minY;
-        //System.out.println(Arrays.toString(mins));
-        return mins;
+        maxs[0] = maxX;
+        maxs[1] = maxY;
+        //System.out.println(Arrays.toString(maxs));
+        return maxs;
     }
 
 
