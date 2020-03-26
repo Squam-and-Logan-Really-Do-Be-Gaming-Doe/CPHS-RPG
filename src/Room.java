@@ -5,10 +5,13 @@ import java.util.List;
 public class Room {
     private Tile[] tiles;
     private ArrayList<Character> NPCs;
+    /*
     private boolean scrollX;
     private boolean scrollY;
     private double camXMod = 0;
     private double camYMod = 0;
+
+     */
 
     public Room()
     {
@@ -48,6 +51,7 @@ public class Room {
         return tiles;
     }
 
+    /*
     public boolean isScrollX() {
         return scrollX;
     }
@@ -76,6 +80,8 @@ public class Room {
         if(max-min>9) scrollY = true;
 
     }
+    
+     */
 
     public void setNPCs(ArrayList<Character> NPCs) {
         this.NPCs = NPCs;
@@ -150,6 +156,7 @@ public class Room {
         return both;
     }
 
+    /*
     public void scrollModifier(PChar chara)
     {
         double[] smoth = chara.smoother();
@@ -161,7 +168,12 @@ public class Room {
             int minX = both[0];
             int maxX = both[2];
             int difference = maxX-minX;
-            
+            if(charX < difference/2.0)
+            {
+
+            }
         }
     }
+
+     */
 }
