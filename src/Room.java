@@ -80,7 +80,7 @@ public class Room {
         if(max-min>9) scrollY = true;
 
     }
-    
+
      */
 
     public void setNPCs(ArrayList<Character> NPCs) {

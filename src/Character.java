@@ -1,13 +1,15 @@
 public class Character extends Thing {
     private String direction;
     private int frame;
-    Stats stats;
+    private String textPath;
+    private Stats stats;
     public Character(int x, int y, String image, String direction) {
         super(x, y, 1, image);
         this.direction = direction;
         extensionAndPath();
     }
 
+    //<editor-fold desc="Gets And Sets">
     public String getDirection() {
         return direction;
     }
@@ -23,6 +25,23 @@ public class Character extends Thing {
     public void setFrame(int frame) {
         this.frame = frame;
     }
+
+    public String getTextPath() {
+        return textPath;
+    }
+
+    public void setTextPath(String textPath) {
+        this.textPath = textPath;
+    }
+
+    public Stats getStats() {
+        return stats;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+    //</editor-fold>
 
     private void extensionAndPath()
     {

@@ -129,6 +129,40 @@ public class PChar extends Character {
         return false;
     }
 
+    public void interact(Room cRoom)
+    {
+        int checkX = getxPos();
+        int checkY = getyPos();
+        switch (getDirection())
+        {
+            case "U":
+                checkY +=1;
+                break;
+            case "D":
+                checkY -=1;
+                break;
+            case "L":
+                checkX -=1;
+                break;
+            case "R":
+                checkX +=1;
+                break;
+        }
+        Character talkTo = null;
+        for (Character dude :
+                cRoom.getNPCs()) {
+            if (dude.getxPos() == checkX && dude.getyPos() == getyPos())
+            {
+                talkTo = dude;
+            }
+        }
+        if(talkTo != null)
+        {
+
+        }
+
+    }
+
     @Override
     public void draw(int scale)
     {
@@ -146,6 +180,5 @@ public class PChar extends Character {
         //System.out.println(getExtension());
         super.draw(modX*scale+scale/2+xMin*scale,modY*scale+scale/2+yMin*scale,scale, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension());
     }
-
 
 }

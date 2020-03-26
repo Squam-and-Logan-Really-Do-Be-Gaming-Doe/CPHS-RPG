@@ -1,3 +1,4 @@
+import javax.xml.soap.Text;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -147,6 +148,7 @@ public class Game {
             }
             int[] mins = cRoom.getMaxPos();
             player.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
+            //TextHandler.drawFrame();
             goodSleep();
             StdDraw.show();
             frame ++;
@@ -239,7 +241,7 @@ public class Game {
             }
             newRoom.setNPCs(chars);
             fRoom.close();
-            newRoom.determineScroll();
+            //newRoom.determineScroll();
             return newRoom;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
