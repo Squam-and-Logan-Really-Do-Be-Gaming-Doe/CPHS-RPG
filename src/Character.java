@@ -55,8 +55,6 @@ public class Character extends Thing {
         else if(frame == 1) frame = 0;
     }
 
-
-
     @Override
     public void draw(int scale) {
         setExtension(getFrame() + getDirection() + getExtension());

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class PChar extends Character {
     private boolean moving;
     private double movFactor;
@@ -52,27 +54,14 @@ public class PChar extends Character {
                 moving = false;
             }
             //System.out.println(movFactor);
+            if(!canMove(cRoom))
+            {
+                moving = false;
+                movFactor = 0;
+            };
         }
         //System.out.println(moving);
-        double[] smoth = mods();
-        if(moving)
-            for (int i = 0; i < cRoom.getNPCs().size(); i++) {
-                if(willCollide(cRoom.getNPCs().get(i), smoth))
-                {
-                    moving = false;
-                    movFactor = 0;
-                    break;
-                }
-            }
-        if(moving)
-            for (int i = 0; i < cRoom.getTiles().length; i++) {
-                if(willCollide(cRoom.getTiles()[i], smoth))
-                {
-                    moving = false;
-                    movFactor = 0;
-                    break;
-                }
-            }
+        //if(moving)
         return moving;
     }
 
@@ -114,11 +103,11 @@ public class PChar extends Character {
         return new double[]{modX, modY};
     }
 
-    public boolean willCollide(Thing t, double[] smoth) {
-        int checkX = (int)(getxPos()+Math.ceil(smoth[0]));
-        int checkY = (int)(getyPos()+Math.ceil(smoth[1]));
-        if(smoth[0]< 0)checkX = (int)(getxPos()+Math.floor(smoth[0]));
-        if(smoth[1]< 0)checkY = (int)(getyPos()+Math.floor(smoth[1]));
+    private boolean willCollide(Thing t, double[] smoth) {
+        double[] check = findCheck(smoth);
+
+        double checkX = check[0];
+        double checkY = check[1];
         //System.out.println( checkX + "," + checkY + " vs. " + t.getxPos() + "," + t.getyPos());
         if(checkX == t.getxPos() && checkY == t.getyPos())
         {
@@ -127,6 +116,50 @@ public class PChar extends Character {
             return getzPos() <= t.getzPos();
         }
         return false;
+    }
+
+    private boolean hasTile(Room cRoom, double x, double y)
+    {
+        for (int i = 0; i < cRoom.getTiles().length; i++) {
+            Tile test = cRoom.getTiles()[i];
+            if(test.getxPos() == x && test.getyPos() == y) return true;
+        }
+
+        return false;
+    }
+
+    public boolean canMove(Room cRoom)
+    {
+        double[] smoth = mods();
+        for (int i = 0; i < cRoom.getNPCs().size(); i++) {
+            if(willCollide(cRoom.getNPCs().get(i), smoth))
+            {
+                return false;
+            }
+        }
+        for (int i = 0; i < cRoom.getTiles().length; i++) {
+            if (willCollide(cRoom.getTiles()[i], smoth)) {
+                return false;
+            }
+        }
+
+        double[] check = findCheck(smoth);
+
+        double checkX = check[0];
+        double checkY = check[1];
+
+       return (hasTile(cRoom, checkX, checkY));
+
+    }
+
+    private double[] findCheck(double[] smoth)
+    {
+        int checkX = (int)(getxPos()+Math.ceil(smoth[0]));
+        int checkY = (int)(getyPos()+Math.ceil(smoth[1]));
+        if(smoth[0]< 0)checkX = (int)(getxPos()+Math.floor(smoth[0]));
+        if(smoth[1]< 0)checkY = (int)(getyPos()+Math.floor(smoth[1]));
+
+        return new double[]{checkX,checkY};
     }
 
     public void interact(Room cRoom)

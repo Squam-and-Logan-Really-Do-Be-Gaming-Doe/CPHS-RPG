@@ -150,8 +150,8 @@ public class Room {
 
         both[0] = mins[0];
         both[1] = mins[1];
-        both[2] = mins[0];
-        both[3] = mins[1];
+        both[2] = maxs[0];
+        both[3] = maxs[1];
 
         return both;
     }
