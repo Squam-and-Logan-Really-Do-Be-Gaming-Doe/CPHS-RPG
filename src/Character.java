@@ -22,10 +22,6 @@ public class Character extends Thing {
         return frame;
     }
 
-    public void setFrame(int frame) {
-        this.frame = frame;
-    }
-
     public String getTextPath() {
         return textPath;
     }

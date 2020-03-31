@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class PChar extends Character {
     private boolean moving;
     private double movFactor;
@@ -58,7 +56,7 @@ public class PChar extends Character {
             {
                 moving = false;
                 movFactor = 0;
-            };
+            }
         }
         //System.out.println(moving);
         //if(moving)
@@ -104,7 +102,7 @@ public class PChar extends Character {
     }
 
     private boolean willCollide(Thing t, double[] smoth) {
-        double[] check = findCheck(smoth);
+        double[] check = findCheck();
 
         double checkX = check[0];
         double checkY = check[1];
@@ -143,7 +141,7 @@ public class PChar extends Character {
             }
         }
 
-        double[] check = findCheck(smoth);
+        double[] check = findCheck();
 
         double checkX = check[0];
         double checkY = check[1];
@@ -152,17 +150,7 @@ public class PChar extends Character {
 
     }
 
-    private double[] findCheck(double[] smoth)
-    {
-        int checkX = (int)(getxPos()+Math.ceil(smoth[0]));
-        int checkY = (int)(getyPos()+Math.ceil(smoth[1]));
-        if(smoth[0]< 0)checkX = (int)(getxPos()+Math.floor(smoth[0]));
-        if(smoth[1]< 0)checkY = (int)(getyPos()+Math.floor(smoth[1]));
-
-        return new double[]{checkX,checkY};
-    }
-
-    public void interact(Room cRoom)
+    private double[] findCheck()
     {
         int checkX = getxPos();
         int checkY = getyPos();
@@ -181,17 +169,28 @@ public class PChar extends Character {
                 checkX +=1;
                 break;
         }
+
+        return new double[]{checkX,checkY};
+
+
+    }
+
+    public void interact(Room cRoom)
+    {
+        double[] check = findCheck();
+        double checkX = check[0];
+        double checkY = check[1];
         Character talkTo = null;
         for (Character dude :
                 cRoom.getNPCs()) {
-            if (dude.getxPos() == checkX && dude.getyPos() == getyPos())
+            if (dude.getxPos() == checkX && dude.getyPos() == checkY)
             {
                 talkTo = dude;
             }
         }
         if(talkTo != null)
         {
-
+            
         }
 
     }
