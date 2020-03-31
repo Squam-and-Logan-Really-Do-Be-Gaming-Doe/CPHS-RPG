@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static int scale = 80;
+    public static int scale = 80;
 
     public static final int confirm = 88;
     public static final int cancel = 90;
@@ -146,6 +146,7 @@ public class Game {
                 //System.out.println(player.printPos());
                 cRoom.drawRoom();
             }
+            if(StdDraw.isKeyPressed(confirm)) player.interact(cRoom);
             int[] mins = cRoom.getMaxPos();
             player.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
             //TextHandler.drawFrame();

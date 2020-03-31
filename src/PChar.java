@@ -101,7 +101,7 @@ public class PChar extends Character {
         return new double[]{modX, modY};
     }
 
-    private boolean willCollide(Thing t, double[] smoth) {
+    public boolean willCollide(Thing t) {
         double[] check = findCheck();
 
         double checkX = check[0];
@@ -128,15 +128,14 @@ public class PChar extends Character {
 
     public boolean canMove(Room cRoom)
     {
-        double[] smoth = mods();
         for (int i = 0; i < cRoom.getNPCs().size(); i++) {
-            if(willCollide(cRoom.getNPCs().get(i), smoth))
+            if(willCollide(cRoom.getNPCs().get(i)))
             {
                 return false;
             }
         }
         for (int i = 0; i < cRoom.getTiles().length; i++) {
-            if (willCollide(cRoom.getTiles()[i], smoth)) {
+            if (willCollide(cRoom.getTiles()[i])) {
                 return false;
             }
         }
@@ -190,9 +189,24 @@ public class PChar extends Character {
         }
         if(talkTo != null)
         {
-            
+            switch (getDirection()) {
+                case "U":
+                    talkTo.setDirection("D");
+                    break;
+                case "D":
+                    talkTo.setDirection("U");
+                    break;
+                case "L":
+                    talkTo.setDirection("R");
+                    break;
+                case "R":
+                    talkTo.setDirection("L");
+                    break;
+            }
         }
-
+        cRoom.drawRoom();
+        int[] mins = cRoom.getMaxPos();
+        draw(Game.getScale(), (15.0-mins[0])/2, (9.0-mins[1])/2);
     }
 
     @Override
@@ -201,7 +215,7 @@ public class PChar extends Character {
         double[] mods = smoother();
         double modX = mods[0];
         double modY = mods[1];
-        StdDraw.picture(modX*scale+scale/2, modY*scale+scale/2, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension() , scale, scale);
+        StdDraw.picture(modX*scale+scale/2.0, modY*scale+scale/2.0, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension() , scale, scale);
     }
 
     public void draw(int scale, double xMin, double yMin)
@@ -210,7 +224,7 @@ public class PChar extends Character {
         double modX = mods[0];
         double modY = mods[1];
         //System.out.println(getExtension());
-        super.draw(modX*scale+scale/2+xMin*scale,modY*scale+scale/2+yMin*scale,scale, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension());
+        super.draw(modX*scale+scale/2.0+xMin*scale,modY*scale+scale/2.0+yMin*scale,scale, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension());
     }
 
 }
