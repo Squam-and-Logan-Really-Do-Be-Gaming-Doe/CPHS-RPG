@@ -187,8 +187,7 @@ public class PChar extends Character {
                 talkTo = dude;
             }
         }
-        if(talkTo != null)
-        {
+        if(talkTo != null) {
             switch (getDirection()) {
                 case "U":
                     talkTo.setDirection("D");
@@ -203,10 +202,15 @@ public class PChar extends Character {
                     talkTo.setDirection("L");
                     break;
             }
+
+            if (talkTo.getTextPath() != null) {
+                cRoom.drawRoom();
+                int[] mins = cRoom.getMaxPos();
+                draw(Game.getScale(), (15.0 - mins[0]) / 2, (9.0 - mins[1]) / 2);
+                TextHandler.textRead(talkTo.getTextPath());
+
+            }
         }
-        cRoom.drawRoom();
-        int[] mins = cRoom.getMaxPos();
-        draw(Game.getScale(), (15.0-mins[0])/2, (9.0-mins[1])/2);
     }
 
     @Override
