@@ -8,6 +8,12 @@ public class Character extends Thing {
         this.direction = direction;
         extensionAndPath();
     }
+    public Character(int x, int y, String image, String direction, String text) {
+        super(x, y, 1, image);
+        this.direction = direction;
+        textPath = "Data/Speech/" + text;
+        extensionAndPath();
+    }
 
     //<editor-fold desc="Gets And Sets">
     public String getDirection() {

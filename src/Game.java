@@ -129,6 +129,7 @@ public class Game {
 
     private void roomHandler()
     {
+        StdDraw.clear();
         cRoom.drawRoom();
         StdDraw.show();
         int frame = 0;
@@ -200,6 +201,7 @@ public class Game {
 
     private Room scanRoom(String roomName)
     {
+        loadingScreen();
         try {
             //fRoom means File-Room
             Scanner fRoom = new Scanner(new File("Data/Rooms/" + roomName + ".dat"));
@@ -208,6 +210,12 @@ public class Game {
             while(fRoom.hasNextLine())
             {
                 String name = fRoom.next();
+                if(name.equals("μ"))
+                {
+                    Sounds.changeSong(fRoom.nextLine().substring(1));
+                    //fRoom.nextLine();
+                    continue;
+                }
                 if(name.equals("α"))
                 {
                     fRoom.next();
@@ -238,6 +246,7 @@ public class Game {
                 int x = fRoom.nextInt();
                 int y = fRoom.nextInt();
                 String direc = fRoom.next();
+                String text = fRoom.nextLine();
                 chars.add(new Character(x,y,name,direc));
             }
             newRoom.setNPCs(chars);
@@ -264,4 +273,12 @@ public class Game {
     public static int getScale() {
         return scale;
     }
+
+    public static void loadingScreen()
+    {
+        StdDraw.clear();
+        StdDraw.text(640, 360, "NOW LOADING...");
+        StdDraw.show();
+    }
+
 }
