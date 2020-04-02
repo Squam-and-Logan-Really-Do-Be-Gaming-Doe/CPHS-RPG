@@ -254,11 +254,15 @@ public class Game {
                 int x = fRoom.nextInt();
                 int y = fRoom.nextInt();
                 String direc = fRoom.next();
-                String text = fRoom.nextLine().substring(1);
-                if(!text.equals("null")) chars.add(new Character(x,y,name,direc, text));
+                //System.out.println(name + " " + x + " " + y + " " + direc);
+                String maybeVoice = fRoom.next();
+                if (!maybeVoice.equals("null")) {
+                    String text = fRoom.nextLine().substring(1);
+                    chars.add(new Character(x, y, name, direc, text, maybeVoice));
+                }
                 else
                 {
-                    chars.add(new Character(x,y,name,direc));
+                    chars.add(new Character(x, y, name, direc));
                 }
             }
             newRoom.setNPCs(chars);

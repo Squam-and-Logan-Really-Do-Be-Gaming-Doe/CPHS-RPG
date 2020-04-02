@@ -2,6 +2,7 @@ public class Character extends Thing {
     private String direction;
     private int frame;
     private String textPath;
+    private String voicePath;
     private Stats stats;
     public Character(int x, int y, String image, String direction) {
         super(x, y, 1, image);
@@ -12,6 +13,13 @@ public class Character extends Thing {
         super(x, y, 1, image);
         this.direction = direction;
         textPath = "Data/Speech/" + text;
+        extensionAndPath();
+    }
+    public Character(int x, int y, String image, String direction, String text, String voice) {
+        super(x, y, 1, image);
+        this.direction = direction;
+        textPath = "Data/Speech/" + text;
+        voicePath = "Data/Voice/" + voice + ".wav";
         extensionAndPath();
     }
 
@@ -72,8 +80,7 @@ public class Character extends Thing {
         extensionAndPath();
     }
 
-
-
-
-
+    public String getVoicePath() {
+        return voicePath;
+    }
 }

@@ -15,13 +15,14 @@ public class TextHandler {
     {
         return new String[]{"","","",""};
     }
-    public static void textRead(String filePath)
+    public static void textRead(String filePath, String voice)
     {
         try {
             Scanner reader = new Scanner(new File(filePath));
             drawFrame();
             reader.useDelimiter("");
             int index = 0;
+            int count = 0;
             String[] texts = initializeTexts();
             while(reader.hasNext())
             {
@@ -41,7 +42,11 @@ public class TextHandler {
                     Game.goodSleep();
                     Game.goodSleep();
                 }
+                if(!chara.equals("!") && !chara.equals(".") && !chara.equals(" ") && count%2==0) Sounds.textBlip(voice);
+                count++;
+
                 StdDraw.show();
+
             }
             triangleAndWait();
         } catch (FileNotFoundException e) {

@@ -1,4 +1,4 @@
-μ paralyzer.mid
+μ NewDivide.mid
 α grid floor 0 0 3 3
 floor 2 4
 floor 2 5
@@ -7,5 +7,7 @@ floor 2 7
 floor 2 8
 floor 2 9
 Δ Chars
-testy 0 0 D testroom/00.txt
+testy 0 0 D deepVoice testroom/00.txt
+testy 3 4 R medVoice testroom/00.txt
 testy 2 0 L null
+testy 2 1 L null
