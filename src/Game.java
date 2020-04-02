@@ -133,8 +133,10 @@ public class Game {
         cRoom.drawRoom();
         StdDraw.show();
         int frame = 0;
+        boolean yopoC = false;
         while(true)
         {
+            boolean press = StdDraw.isKeyPressed(Game.confirm);
             if (frame == 30)
             {
                 frame = 0;
@@ -147,9 +149,15 @@ public class Game {
                 //System.out.println(player.printPos());
                 cRoom.drawRoom();
             }
-            if(StdDraw.isKeyPressed(confirm)) player.interact(cRoom);
+            if(press && !yopoC)
+            {
+                player.interact(cRoom);
+                StdDraw.clear();
+                cRoom.drawRoom();
+            }
             int[] mins = cRoom.getMaxPos();
             player.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
+            yopoC = press;
             //TextHandler.drawFrame();
             goodSleep();
             StdDraw.show();
