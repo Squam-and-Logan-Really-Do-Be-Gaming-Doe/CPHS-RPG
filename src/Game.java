@@ -1,9 +1,12 @@
+import com.sun.xml.internal.bind.v2.runtime.output.Pcdata;
+
 import javax.xml.soap.Text;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Game {
@@ -159,6 +162,11 @@ public class Game {
             player.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
             yopoC = press;
             //TextHandler.drawFrame();
+            if(cRoom.getWarps() != null)
+            {
+                warpHandler(player, cRoom);
+            }
+            //System.out.println(player.getxPos() + " " + player.getyPos());
             goodSleep();
             StdDraw.show();
             frame ++;
@@ -251,6 +259,7 @@ public class Game {
             while(fRoom.hasNextLine())
             {
                 String name = fRoom.next();
+                if(name.equals("Δ")) break;
                 int x = fRoom.nextInt();
                 int y = fRoom.nextInt();
                 String direc = fRoom.next();
@@ -266,6 +275,22 @@ public class Game {
                 }
             }
             newRoom.setNPCs(chars);
+            if(fRoom.hasNext()) fRoom.nextLine();
+            ArrayList<Warp> warpA = new ArrayList<>();
+            //System.out.println("hello");
+            while(fRoom.hasNext())
+            {
+                int oldX = fRoom.nextInt();
+                int oldY = fRoom.nextInt();
+                int z = 0;
+                int newX = fRoom.nextInt();
+                int newY = fRoom.nextInt();
+                //System.out.println(oldX+ " " + oldY + " vs. " + newX + " " + newY);
+                String warpRoom = fRoom.nextLine().substring(1);
+                warpA.add(new Warp(oldX,oldY,z,newX,newY, warpRoom));
+            }
+            //System.out.println("helo");
+            if(!warpA.isEmpty()) newRoom.setWarps(warpA);
             fRoom.close();
             //newRoom.determineScroll();
             return newRoom;
@@ -295,6 +320,29 @@ public class Game {
         StdDraw.clear();
         StdDraw.text(640, 360, "NOW LOADING...");
         StdDraw.show();
+    }
+
+    private void warpHandler(PChar player, Room cRoom)
+    {
+        //System.out.println(Arrays.toString(cRoom.getWarps()));
+        for (Warp warp :
+                cRoom.getWarps()) {
+            if(willWarp(player, warp))
+            {
+                //System.out.println("i am a here");
+                this.cRoom = scanRoom(warp.getNewRoom());
+                player.setxPos(warp.getNewX());
+                //System.out.println(player.getxPos());
+                player.setyPos(warp.getNewY());
+                //System.out.println(player.getyPos());
+                break;
+            }
+            //System.out.println("ok");
+        }
+    }
+    private boolean willWarp(PChar player, Warp warp)
+    {
+        return (player.getxPos() == warp.getxPos()) && (player.getyPos() == warp.getyPos());
     }
 
 }

@@ -26,6 +26,7 @@ public class Sounds {
         if(!cSong.equals(nSong))
         {
             cSong = nSong;
+            StdAudio.close();
             loopMusic();
             return;
         }

@@ -5,6 +5,7 @@ import java.util.List;
 public class Room {
     private Tile[] tiles;
     private ArrayList<Character> NPCs;
+    private Warp[] warps;
     /*
     private boolean scrollX;
     private boolean scrollY;
@@ -30,7 +31,6 @@ public class Room {
             tiles[i] = Atiles.get(i);
         }
     }
-
     public void drawRoom()
     {
         int scale = Game.getScale();
@@ -85,6 +85,22 @@ public class Room {
 
     public void setNPCs(ArrayList<Character> NPCs) {
         this.NPCs = NPCs;
+    }
+
+    public Warp[] getWarps() {
+        return warps;
+    }
+
+    public void setWarps(Warp[] warps) {
+        this.warps = warps;
+    }
+
+    public void setWarps(ArrayList<Warp> warpArrayList)
+    {
+        warps = new Warp[warpArrayList.size()];
+        for (int i = 0; i < warpArrayList.size(); i++) {
+            warps[i] = warpArrayList.get(i);
+        }
     }
 
     private void drawNPCs(int scale)
