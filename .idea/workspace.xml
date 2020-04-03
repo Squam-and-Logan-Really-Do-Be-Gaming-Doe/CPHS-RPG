@@ -8,12 +8,8 @@
   <component name="ChangeListManager">
     <list default="true" id="99b14daa-7466-49b3-8119-f81d0b847995" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Rooms/test copy.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Rooms/test copy.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Rooms/test.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Rooms/test.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CPHS-RPG/Sounds.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CPHS-RPG/Sounds.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sounds.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sounds.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Music/What Ive Done.mid" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Music/What Ive Done.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Music/paralyzer.mid" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Music/paralyzer.mid" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,14 +40,14 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\dane_865258\Documents\GitHub\CPHS-RPG\Data\Rooms" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.SimpleAudioPlayer">
     <configuration name="Runner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Runner" />
       <module name="CPHS-RPG" />
@@ -59,8 +55,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SimpleAudioPlayer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SimpleAudioPlayer" />
+      <module name="CPHS-RPG" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SimpleAudioPlayer" />
         <item itemvalue="Application.Runner" />
       </list>
     </recent_temporary>
@@ -100,7 +104,8 @@
       <workItem from="1585060677355" duration="3725000" />
       <workItem from="1585664529925" duration="11764000" />
       <workItem from="1585840780838" duration="4088000" />
-      <workItem from="1585845140517" duration="6102000" />
+      <workItem from="1585845140517" duration="6396000" />
+      <workItem from="1585936906884" duration="2237000" />
     </task>
     <servers />
   </component>
@@ -131,10 +136,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="448" y="166" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585233834963">
+    <state x="448" y="166" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585853037356">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="448" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1585233834963" />
+    <state x="448" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1585853037356" />
     <state x="524" y="95" key="#com.intellij.ide.util.MemberChooser" timestamp="1585851297876">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -151,25 +156,25 @@
     </state>
     <state x="504" y="187" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584972046787" />
     <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1583868478123" />
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1585852751568">
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1585940058735">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585852751568" />
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585940058735" />
     <state width="1637" height="272" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1584045346955" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1585852751568">
+    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1585940058734">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585852751568" />
+    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585940058734" />
     <state width="1637" height="272" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1584045346954" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1585852751568">
+    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1585940058734">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585852751568" />
+    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585940058734" />
     <state width="1637" height="272" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1584045346954" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1585852751568">
+    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1585940058734">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585852751568" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585940058734" />
     <state width="1637" height="272" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1584045346954" />
     <state width="1637" height="336" key="GridCell.Tab.1.bottom" timestamp="1583530889018">
       <screen x="0" y="0" width="1680" height="1010" />
@@ -191,14 +196,14 @@
     </state>
     <state width="1323" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1583432118615" />
     <state width="1637" height="336" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1583530889018" />
-    <state x="108" y="12" key="SettingsEditor" timestamp="1583431114186">
+    <state x="108" y="12" key="SettingsEditor" timestamp="1585853089555">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="108" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583431114186" />
-    <state x="440" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585847267119">
+    <state x="108" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1585853089555" />
+    <state x="440" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585936931449">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="440" y="237" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1585847267119" />
+    <state x="440" y="237" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1585936931449" />
     <state x="541" y="329" key="com.intellij.ide.util.TipDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1583868442077" />
     <state x="222" y="125" key="new project wizard" timestamp="1583422940838">
       <screen x="0" y="0" width="1680" height="1010" />
