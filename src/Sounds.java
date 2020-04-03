@@ -1,5 +1,8 @@
 public class Sounds {
+
+    /*
     public static String cSong;
+
     private static void loopMusic()
     {
         //System.out.println("whats crackin");
@@ -11,11 +14,14 @@ public class Sounds {
         catch (Exception e) {e.printStackTrace();}
         //System.out.println("hello");
     }
+
+     */
     public static void sfx(String sound)
     {
         StdAudio.play("Data/SFX/" + sound);
     }
-    public static void changeSong(String nSong)
+
+    /*public static void changeSong(String nSong)
     {
         if(cSong == null)
         {
@@ -32,6 +38,8 @@ public class Sounds {
         }
 
     }
+
+     */
 
     public static void textBlip()
     {

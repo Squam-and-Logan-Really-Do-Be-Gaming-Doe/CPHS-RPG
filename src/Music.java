@@ -10,44 +10,37 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class SimpleAudioPlayer
+public class Music
 {
 
     // to store current position
-    Long currentFrame;
-    Clip clip;
+    private Long currentFrame;
+    private Clip clip;
 
     // current status of clip
-    String status;
+    private String status;
 
-    AudioInputStream audioInputStream;
-    static String filePath;
+    private AudioInputStream audioInputStream;
+    private String filePath;
 
     // constructor to initialize streams and clip
-    public SimpleAudioPlayer()
+    public Music()
             throws UnsupportedAudioFileException,
             IOException, LineUnavailableException
     {
         // create AudioInputStream object
-        audioInputStream =
-                AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
-
-        // create clip reference
-        clip = AudioSystem.getClip();
-
-        // open audioInputStream to the clip
-        clip.open(audioInputStream);
-
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        if(filePath != null) {
+            initializer();
+        }
     }
 
     public static void main(String[] args)
     {
         try
         {
-            filePath = "Data/Music/paralyzer.wav";
-            SimpleAudioPlayer audioPlayer =
-                    new SimpleAudioPlayer();
+            String filePath = "Data/Music/paralyzer.wav";
+            Music audioPlayer =
+                    new Music();
 
             audioPlayer.play();
             Scanner sc = new Scanner(System.in);
@@ -107,7 +100,7 @@ public class SimpleAudioPlayer
     }
 
     // Method to play the audio
-    public void play()
+    private void play()
     {
         //start the clip
         clip.start();
@@ -116,7 +109,7 @@ public class SimpleAudioPlayer
     }
 
     // Method to pause the audio
-    public void pause()
+    private void pause()
     {
         if (status.equals("paused"))
         {
@@ -130,7 +123,7 @@ public class SimpleAudioPlayer
     }
 
     // Method to resume the audio
-    public void resumeAudio() throws UnsupportedAudioFileException,
+    private void resumeAudio() throws UnsupportedAudioFileException,
             IOException, LineUnavailableException
     {
         if (status.equals("play"))
@@ -146,7 +139,7 @@ public class SimpleAudioPlayer
     }
 
     // Method to restart the audio
-    public void restart() throws IOException, LineUnavailableException,
+    private void restart() throws IOException, LineUnavailableException,
             UnsupportedAudioFileException
     {
         clip.stop();
@@ -158,14 +151,14 @@ public class SimpleAudioPlayer
     }
 
     // Method to stop the audio
-    public void stop() {
+    private void stop() {
         currentFrame = 0L;
         clip.stop();
         clip.close();
     }
 
     // Method to jump over a specific part
-    public void jump(long c) throws UnsupportedAudioFileException, IOException,
+    private void jump(long c) throws UnsupportedAudioFileException, IOException,
             LineUnavailableException
     {
         if (c > 0 && c < clip.getMicrosecondLength())
@@ -180,12 +173,44 @@ public class SimpleAudioPlayer
     }
 
     // Method to reset audio stream
-    public void resetAudioStream() throws UnsupportedAudioFileException, IOException,
+    private void resetAudioStream() throws UnsupportedAudioFileException, IOException,
             LineUnavailableException
     {
         audioInputStream = AudioSystem.getAudioInputStream(
                 new File(filePath).getAbsoluteFile());
         clip.open(audioInputStream);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void changeSong(String newSong)
+    {
+        filePath = "Data\\Music\\" + newSong;
+        //System.out.println("he7yo");
+        try {
+            initializer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        //restart();
+    }
+
+    private void initializer() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        if(clip != null) stop();
+        audioInputStream =
+                AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+
+        // create clip reference
+        clip = AudioSystem.getClip();
+
+        // open audioInputStream to the clip
+        clip.open(audioInputStream);
+
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 

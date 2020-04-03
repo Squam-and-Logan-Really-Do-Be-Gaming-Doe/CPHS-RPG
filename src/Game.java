@@ -25,6 +25,7 @@ public class Game {
     private String nameChapter;
     private String timeFrame;
     private PChar player;
+    private static Music music;
     public Game()
     {
         StdDraw.enableDoubleBuffering();
@@ -32,6 +33,12 @@ public class Game {
         StdDraw.setXscale(0, 1280);
         StdDraw.setYscale(0, 720);
 
+        try {
+            music = new Music();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
         titleScreen();
         roomHandler();
@@ -39,6 +46,7 @@ public class Game {
 
     private void titleScreen()
     {
+        music.changeSong("Snow-Halation.wav");
         StdDraw.setPenColor(Color.black);
         StdDraw.text(640,360, "CPHS-RPG");
         StdDraw.text(640, 300, "Press X");
@@ -90,9 +98,11 @@ public class Game {
         while ((!StdDraw.isKeyPressed(confirm) || yopoC) && (!StdDraw.isKeyPressed(cancel) || yopoC)) {
 
             if (StdDraw.isKeyPressed(38) && !yopoU) {
+                Sounds.sfx("Selector.wav");
                 selector--;
             }
             if (StdDraw.isKeyPressed(40) && !yopoD) {
+                Sounds.sfx("Selector.wav");
                 selector++;
             }
 
@@ -107,6 +117,7 @@ public class Game {
             StdDraw.show();
             StdDraw.clear();
         }
+        Sounds.sfx("Selected.wav");
         //System.out.println("break");
         if(files[selector].equals("New File"))
         {
@@ -228,12 +239,15 @@ public class Game {
                 String name = fRoom.next();
                 if(name.equals("μ"))
                 {
-                    Sounds.changeSong(fRoom.nextLine().substring(1));
+                    //System.out.println("music be longing");
+                    music.changeSong(fRoom.nextLine().substring(1));
+                    //System.out.println("for real doe");
                     //fRoom.nextLine();
                     continue;
                 }
                 if(name.equals("α"))
                 {
+                    //System.out.println("nae nae");
                     fRoom.next();
                     String tileName = fRoom.next();
                     int startX = fRoom.nextInt();
@@ -253,6 +267,7 @@ public class Game {
                 int y = fRoom.nextInt();
                 tiles.add(new Tile(x,y,0, name));
             }
+            //System.out.println("tiles done");
             newRoom = new Room(tiles);
             ArrayList<Character> chars = new ArrayList<>();
             fRoom.nextLine();
@@ -274,6 +289,7 @@ public class Game {
                     chars.add(new Character(x, y, name, direc));
                 }
             }
+            //System.out.println("characters done");
             newRoom.setNPCs(chars);
             if(fRoom.hasNext()) fRoom.nextLine();
             ArrayList<Warp> warpA = new ArrayList<>();
@@ -289,6 +305,7 @@ public class Game {
                 String warpRoom = fRoom.nextLine().substring(1);
                 warpA.add(new Warp(oldX,oldY,z,newX,newY, warpRoom));
             }
+            //System.out.println("warps done");
             //System.out.println("helo");
             if(!warpA.isEmpty()) newRoom.setWarps(warpA);
             fRoom.close();
