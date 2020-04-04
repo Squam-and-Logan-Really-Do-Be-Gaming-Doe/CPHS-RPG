@@ -188,16 +188,17 @@ public class Music
 
     public void changeSong(String newSong)
     {
-        filePath = "Data\\Music\\" + newSong;
-        //System.out.println("he7yo");
-        try {
-            initializer();
+        String mayb = "Data\\Music\\" + newSong;
+        if(!mayb.equals(filePath)) {
+            filePath = mayb;
+            //System.out.println("he7yo");
+            try {
+                initializer();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //restart();
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        //restart();
     }
 
     private void initializer() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
