@@ -1,9 +1,13 @@
+import sun.net.sdp.SdpSupport;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Room {
     private Tile[] tiles;
     private ArrayList<Character> NPCs;
     private Warp[] warps;
+    private String bg;
     /*
     private boolean scrollX;
     private boolean scrollY;
@@ -33,6 +37,7 @@ public class Room {
         int[] maxs = getMaxPos();
         //15 x - spaces in a room
         //9 y - spaces in a room
+        //drawBG();
         for (Tile temp : tiles) {
             temp.draw(scale, centerX(maxs[0]), centerY(maxs[1]));
         }
@@ -45,14 +50,22 @@ public class Room {
             guy.draw(scale, centerX(maxs[0]), centerY(maxs[1]));
         }
     }
+    public void drawBG()
+    {
+        if(bg != null)
+        {
+            StdDraw.picture((Game.xSize)/2,(Game.ySize)/2,"Data/BG/" + bg, Game.xSize, Game.ySize);
+            //StdDraw.setPenColor(Color.black);
+        }
+    }
 
     public static double centerX(double maxX)
     {
-        return (15.0-maxX)/2;
+        return ((Game.xSize/Game.scale)-maxX-1)/2;
     }
     public static double centerY(double maxY)
     {
-        return (8.0-maxY)/2;
+        return ((Game.ySize/Game.scale)-maxY-1)/2;
     }
 
     public void animate()
@@ -84,6 +97,12 @@ public class Room {
         }
     }
 
+    public void setBg(String bg1)
+    {
+        bg = bg1;
+    }
+
+    //<editor-fold desc="Max And Min">
     public int[] getMaxPos()
     {
 
@@ -129,6 +148,7 @@ public class Room {
 
         return both;
     }
+    //</editor-fold>
 
     /*
     public boolean isScrollX() {

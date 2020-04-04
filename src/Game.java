@@ -16,6 +16,9 @@ public class Game {
     public static final int down = 40;
     public static final int left = 37;
     public static final int right = 39;
+    public static final int xSize = 1280;
+    public static final int ySize = 720;
+
 
     private Room cRoom;
     private int chapter;
@@ -30,9 +33,9 @@ public class Game {
         StdDraw.enableDoubleBuffering();
         StdDraw.setCanvasSize(768, 432);
         //Max X blocks: 16. Each Block is 80 Pixels
-        StdDraw.setXscale(0, 1280);
+        StdDraw.setXscale(0, xSize);
         //Max Y Blocks: 9. Each Block is 80 Pixels
-        StdDraw.setYscale(0, 720);
+        StdDraw.setYscale(0, ySize);
 
         try {
             music = new Music();
@@ -210,6 +213,7 @@ public class Game {
     private void roomHandler()
     {
         StdDraw.clear();
+        cRoom.drawBG();
         cRoom.drawRoom();
         StdDraw.show();
         int frame = 0;
@@ -233,6 +237,7 @@ public class Game {
             {
                 player.interact(cRoom);
                 StdDraw.clear();
+                cRoom.drawBG();
                 cRoom.drawRoom();
             }
             int[] maxs = cRoom.getMaxPos();
@@ -260,10 +265,14 @@ public class Game {
             {
                 //System.out.println("i am a here");
                 this.cRoom = scanRoom(warp.getNewRoom());
+                StdDraw.clear();
+                cRoom.drawBG();
+                cRoom.drawRoom();
                 player.setxPos(warp.getNewX());
                 //System.out.println(player.getxPos());
                 player.setyPos(warp.getNewY());
                 //System.out.println(player.getyPos());
+                StdDraw.show();
                 break;
             }
             //System.out.println("ok");
@@ -277,12 +286,13 @@ public class Game {
 
     private Room scanRoom(String roomName)
     {
-        loadingScreen();
+        //loadingScreen();
         try {
             //fRoom means File-Room
             Scanner fRoom = new Scanner(new File("Data/Rooms/" + roomName + ".dat"));
             ArrayList<Tile> tiles = new ArrayList<>();
             Room newRoom;
+            String bg = "";
             while(fRoom.hasNextLine())
             {
                 String name = fRoom.next();
@@ -292,6 +302,11 @@ public class Game {
                     music.changeSong(fRoom.nextLine().substring(1));
                     //System.out.println("for real doe");
                     //fRoom.nextLine();
+                    continue;
+                }
+                if(name.equals("β"))
+                {
+                    bg = fRoom.nextLine().substring(1);
                     continue;
                 }
                 if(name.equals("α"))
@@ -318,6 +333,10 @@ public class Game {
             }
             //System.out.println("tiles done");
             newRoom = new Room(tiles);
+            if(!bg.equals(""))
+            {
+                newRoom.setBg(bg);
+            }
             ArrayList<Character> chars = new ArrayList<>();
             fRoom.nextLine();
             while(fRoom.hasNextLine())

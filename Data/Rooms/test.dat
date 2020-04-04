@@ -1,4 +1,5 @@
 μ paralyzer.wav
+β cedarpark.jpg
 α grid floor 0 0 3 3
 floor 2 4
 floor 2 5
@@ -11,4 +12,4 @@ testy 3 4 R medVoice testroom/00.txt
 testy 2 0 L null
 testy 2 1 L null
 Δ Warps
-2 8 1 0 test copy
+2 8 1 1 test copy

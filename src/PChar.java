@@ -205,8 +205,8 @@ public class PChar extends Character {
 
             if (talkTo.getTextPath() != null) {
                 cRoom.drawRoom();
-                int[] mins = cRoom.getMaxPos();
-                draw(Game.getScale(), (15.0 - mins[0]) / 2, (9.0 - mins[1]) / 2);
+                int[] maxs = cRoom.getMaxPos();
+                draw(Game.getScale(), Room.centerX(maxs[0]), Room.centerY(maxs[1]));
                 TextHandler.textRead(talkTo.getTextPath(),talkTo.getVoicePath());
 
             }
