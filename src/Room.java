@@ -34,13 +34,13 @@ public class Room {
     public void drawRoom()
     {
         int scale = Game.getScale();
-        int[] mins = getMaxPos();
+        int[] maxs = getMaxPos();
         //15 x - spaces in a room
         //9 y - spaces in a room
         for (Tile temp : tiles) {
-            temp.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
+            temp.draw(scale, (15.0-maxs[0])/2, (8.0-maxs[1])/2);
         }
-        drawNPCs(scale, mins);
+        drawNPCs(scale, maxs);
     }
 
     public ArrayList<Character> getNPCs() {
@@ -115,7 +115,7 @@ public class Room {
     {
         for (Character guy : NPCs) {
             //System.out.println(guy.getxPos() + ", " + guy.getyPos() + " vs " + ((15.0-mins[0])/2)*guy.getxPos());
-            guy.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
+            guy.draw(scale, (15.0-mins[0])/2, (8.0-mins[1])/2);
         }
     }
 
@@ -129,8 +129,8 @@ public class Room {
     public int[] getMaxPos()
     {
 
-        int maxX = -1;
-        int maxY = -1;
+        int maxX = Integer.MIN_VALUE;
+        int maxY = Integer.MIN_VALUE;
         int[] maxs = new int[2];
         for (Tile temp :
                 tiles) {

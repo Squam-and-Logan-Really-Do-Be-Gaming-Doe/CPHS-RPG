@@ -1,12 +1,8 @@
-import com.sun.xml.internal.bind.v2.runtime.output.Pcdata;
-
-import javax.xml.soap.Text;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Game {
@@ -30,7 +26,9 @@ public class Game {
     {
         StdDraw.enableDoubleBuffering();
         StdDraw.setCanvasSize(768, 432);
+        //Max X blocks: 16. Each Block is 80 Pixels
         StdDraw.setXscale(0, 1280);
+        //Max Y Blocks: 9. Each Block is 80 Pixels
         StdDraw.setYscale(0, 720);
 
         try {
@@ -117,6 +115,7 @@ public class Game {
             StdDraw.show();
             StdDraw.clear();
         }
+        if(StdDraw.isKeyPressed(cancel))titleScreen();
         Sounds.sfx("Selected.wav");
         //System.out.println("break");
         if(files[selector].equals("New File"))
@@ -170,7 +169,7 @@ public class Game {
                 cRoom.drawRoom();
             }
             int[] mins = cRoom.getMaxPos();
-            player.draw(scale, (15.0-mins[0])/2, (9.0-mins[1])/2);
+            player.draw(scale, (15.0-mins[0])/2, (8.0-mins[1])/2);
             yopoC = press;
             //TextHandler.drawFrame();
             if(cRoom.getWarps() != null)
