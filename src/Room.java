@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Room {
     private Tile[] tiles;
@@ -20,10 +18,6 @@ public class Room {
         NPCs = new ArrayList<>();
     }
 
-    public Room(Tile[] tiles) {
-        this.tiles = tiles;
-    }
-
     public Room(ArrayList<Tile> Atiles)
     {
         tiles = new Tile[Atiles.size()];
@@ -31,6 +25,8 @@ public class Room {
             tiles[i] = Atiles.get(i);
         }
     }
+
+    //<editor-fold desc="Drawing Methods">
     public void drawRoom()
     {
         int scale = Game.getScale();
@@ -42,75 +38,6 @@ public class Room {
         }
         drawNPCs(scale, maxs);
     }
-
-    public ArrayList<Character> getNPCs() {
-        return NPCs;
-    }
-
-    public Tile[] getTiles() {
-        return tiles;
-    }
-
-    /*
-    public boolean isScrollX() {
-        return scrollX;
-    }
-
-    public boolean isScrollY() {
-        return scrollY;
-    }
-
-    public boolean isScroll()
-    {
-        return scrollX || scrollY;
-    }
-
-    public void determineScroll()
-    {
-        scrollX = false; scrollY = false;
-        int[] both = maxAndMin();
-
-        int min = both[0];
-        int max = both[2];
-        if(max-min>15) scrollX = true;
-
-        min = both[1];
-        max = both[3];
-
-        if(max-min>9) scrollY = true;
-
-    }
-
-     */
-
-    public void setNPCs(ArrayList<Character> NPCs) {
-        this.NPCs = NPCs;
-    }
-
-    public Warp[] getWarps() {
-        return warps;
-    }
-
-    public void setWarps(Warp[] warps) {
-        this.warps = warps;
-    }
-
-    public void setWarps(ArrayList<Warp> warpArrayList)
-    {
-        warps = new Warp[warpArrayList.size()];
-        for (int i = 0; i < warpArrayList.size(); i++) {
-            warps[i] = warpArrayList.get(i);
-        }
-    }
-
-    private void drawNPCs(int scale)
-    {
-        for (Character guy : NPCs) {
-            guy.draw(scale);
-        }
-    }
-
-
     private void drawNPCs(int scale, int[] maxs)
     {
         for (Character guy : NPCs) {
@@ -132,6 +59,28 @@ public class Room {
     {
         for (Character cha : NPCs) {
             cha.animate();
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Gets and Sets">
+    public ArrayList<Character> getNPCs() {
+        return NPCs;
+    }
+
+    public Tile[] getTiles() {
+        return tiles;
+    }
+
+    public Warp[] getWarps() {
+        return warps;
+    }
+
+    public void setWarps(ArrayList<Warp> warpArrayList)
+    {
+        warps = new Warp[warpArrayList.size()];
+        for (int i = 0; i < warpArrayList.size(); i++) {
+            warps[i] = warpArrayList.get(i);
         }
     }
 
@@ -180,6 +129,43 @@ public class Room {
 
         return both;
     }
+
+    /*
+    public boolean isScrollX() {
+        return scrollX;
+    }
+
+    public boolean isScrollY() {
+        return scrollY;
+    }
+
+    public boolean isScroll()
+    {
+        return scrollX || scrollY;
+    }
+
+    public void determineScroll()
+    {
+        scrollX = false; scrollY = false;
+        int[] both = maxAndMin();
+
+        int min = both[0];
+        int max = both[2];
+        if(max-min>15) scrollX = true;
+
+        min = both[1];
+        max = both[3];
+
+        if(max-min>9) scrollY = true;
+
+    }
+
+     */
+
+    public void setNPCs(ArrayList<Character> NPCs) {
+        this.NPCs = NPCs;
+    }
+    //</editor-fold>
 
     /*
     public void scrollModifier(PChar chara)

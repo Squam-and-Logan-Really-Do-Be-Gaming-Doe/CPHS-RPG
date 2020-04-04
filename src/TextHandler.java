@@ -54,6 +54,7 @@ public class TextHandler {
         }
     }
 
+    //<editor-fold desc="Drawing Methods">
     private static void triangleAndWait()
     {
         StdDraw.setPenColor(Color.yellow);
@@ -76,8 +77,7 @@ public class TextHandler {
         }
     }
 
-
-    private static String[] textUp(String[] texts)
+    private static void textUp(String[] texts)
     {
         drawFrame();
         drawText(texts);
@@ -100,12 +100,10 @@ public class TextHandler {
             drawFrame();
             //nameBox(name);
         }
-        for (int i = 1; i < texts.length; i++) {
-            texts[i-1] = texts[i];
-        }
+        if (texts.length - 1 >= 0) System.arraycopy(texts, 1, texts, 0, texts.length - 1);
         texts[texts.length-1] = "";
 
-        return texts;
     }
+    //</editor-fold>
 
 }

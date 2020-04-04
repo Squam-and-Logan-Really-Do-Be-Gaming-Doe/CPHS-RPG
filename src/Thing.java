@@ -8,17 +8,13 @@ public class Thing extends Position {
         image = "";
     }
 
-    public Thing(Position pos, String image) {
-        super(pos);
-        this.image = image;
-    }
-
     public Thing(int x, int y, int z, String image)
     {
         super(x,y,z);
         this.image = image;
     }
 
+    //<editor-fold desc="Gets and sets">
     public String getImage() {
         return image;
     }
@@ -42,16 +38,18 @@ public class Thing extends Position {
     public void setExtension(String extension) {
         this.extension = extension;
     }
+    //</editor-fold>
 
     public boolean willCollide(Thing t)
     {
         if(getxPos() == t.getxPos() && getyPos() == t.getyPos())
         {
-            if(getzPos() <= t.getzPos()) return true;
+            return getzPos() <= t.getzPos();
         }
         return false;
     }
 
+    //<editor-fold desc="Drawing Methods">
     public void draw()
     {
         StdDraw.picture(getxPos(), getyPos(), getImage());
@@ -70,6 +68,7 @@ public class Thing extends Position {
     {
         StdDraw.picture(xPos, yPos, filepath, scale, scale);
     }
+    //</editor-fold>
 
 
 }

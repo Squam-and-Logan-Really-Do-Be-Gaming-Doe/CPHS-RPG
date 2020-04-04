@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Game {
 
+    //<editor-fold desc="Instance Variables">
     public static int scale = 80;
 
     public static final int confirm = 88;
@@ -22,6 +23,8 @@ public class Game {
     private String timeFrame;
     private PChar player;
     private static Music music;
+    //</editor-fold>
+
     public Game()
     {
         StdDraw.enableDoubleBuffering();
@@ -42,6 +45,7 @@ public class Game {
         roomHandler();
     }
 
+    //<editor-fold desc="UI Methods">
     private void titleScreen()
     {
         music.changeSong("Snow-Halation.wav");
@@ -59,6 +63,25 @@ public class Game {
         fileSelect();
     }
 
+    public static void loadingScreen()
+    {
+        StdDraw.clear();
+        StdDraw.text(640, 360, "NOW LOADING...");
+        StdDraw.show();
+    }
+    public static void goodSleep()
+    {
+        try
+        {
+            Thread.sleep(16, 666667);
+        } catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="File Methods">
     private void fileSelect()
     {
         for (int i = 0; i < 1000; i+=10) {
@@ -93,7 +116,7 @@ public class Game {
         boolean yopoB = true;
         boolean yopoU = false;
         boolean yopoD = false;
-        while ((!StdDraw.isKeyPressed(confirm) || yopoC) && (!StdDraw.isKeyPressed(cancel) || yopoC)) {
+        while ((!StdDraw.isKeyPressed(confirm) || yopoC) && (!StdDraw.isKeyPressed(cancel) || yopoB)) {
 
             if (StdDraw.isKeyPressed(38) && !yopoU) {
                 Sounds.sfx("Selector.wav");
@@ -140,6 +163,50 @@ public class Game {
         }
     }
 
+    private void fileRead(int slot)
+    {
+        try {
+            Scanner file = new Scanner(new File("Data/Saves/save" + slot + ".dat"));
+            file.next();
+            chapter = file.nextInt();
+            file.nextLine();
+            nameChapter = file.nextLine();
+            timeFrame = file.nextLine();
+            cRoom = scanRoom(file.nextLine());
+            player = new PChar(0,1,"testy", "U");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    private void fileSetup(int slot)
+    {
+        try {
+            File file = new File("Data/Saves/save" + slot + ".dat");
+
+            //Create the file
+            if (file.createNewFile()) {
+                System.out.println("File is created!");
+            } else {
+                System.out.println("File already exists.");
+            }
+
+            //Write Content
+            FileWriter writer = new FileWriter(file);
+            writer.write("Chapter 1");
+            writer.write("\n");
+            writer.write("This is Cedar Park");
+            writer.write("\n");
+            writer.write("Beginning");
+            writer.write("\n");
+            writer.write("test");
+            writer.close();
+        } catch (Exception e) { e.printStackTrace(); }
+
+
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Room Methods">
     private void roomHandler()
     {
         StdDraw.clear();
@@ -183,47 +250,30 @@ public class Game {
         }
     }
 
-    private void fileRead(int slot)
+    //<editor-fold desc="Warp Methods">
+    private void warpHandler(PChar player, Room cRoom)
     {
-        try {
-            Scanner file = new Scanner(new File("Data/Saves/save" + slot + ".dat"));
-            file.next();
-            chapter = file.nextInt();
-            file.nextLine();
-            nameChapter = file.nextLine();
-            timeFrame = file.nextLine();
-            cRoom = scanRoom(file.nextLine());
-            player = new PChar(0,1,"testy", "U");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        //System.out.println(Arrays.toString(cRoom.getWarps()));
+        for (Warp warp :
+                cRoom.getWarps()) {
+            if(willWarp(player, warp))
+            {
+                //System.out.println("i am a here");
+                this.cRoom = scanRoom(warp.getNewRoom());
+                player.setxPos(warp.getNewX());
+                //System.out.println(player.getxPos());
+                player.setyPos(warp.getNewY());
+                //System.out.println(player.getyPos());
+                break;
+            }
+            //System.out.println("ok");
         }
     }
-    private void fileSetup(int slot)
+    private boolean willWarp(PChar player, Warp warp)
     {
-        try {
-            File file = new File("Data/Saves/save" + slot + ".dat");
-
-            //Create the file
-            if (file.createNewFile()) {
-                System.out.println("File is created!");
-            } else {
-                System.out.println("File already exists.");
-            }
-
-            //Write Content
-            FileWriter writer = new FileWriter(file);
-            writer.write("Chapter 1");
-            writer.write("\n");
-            writer.write("This is Cedar Park");
-            writer.write("\n");
-            writer.write("Beginning");
-            writer.write("\n");
-            writer.write("test");
-            writer.close();
-        } catch (Exception e) { e.printStackTrace(); }
-
-
+        return (player.getxPos() == warp.getxPos()) && (player.getyPos() == warp.getyPos());
     }
+    //</editor-fold>
 
     private Room scanRoom(String roomName)
     {
@@ -315,50 +365,9 @@ public class Game {
             return new Room();
         }
     }
-
-    public static void goodSleep()
-    {
-        try
-        {
-            Thread.sleep(16, 666667);
-        } catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
+    //</editor-fold>
 
     public static int getScale() {
         return scale;
     }
-
-    public static void loadingScreen()
-    {
-        StdDraw.clear();
-        StdDraw.text(640, 360, "NOW LOADING...");
-        StdDraw.show();
-    }
-
-    private void warpHandler(PChar player, Room cRoom)
-    {
-        //System.out.println(Arrays.toString(cRoom.getWarps()));
-        for (Warp warp :
-                cRoom.getWarps()) {
-            if(willWarp(player, warp))
-            {
-                //System.out.println("i am a here");
-                this.cRoom = scanRoom(warp.getNewRoom());
-                player.setxPos(warp.getNewX());
-                //System.out.println(player.getxPos());
-                player.setyPos(warp.getNewY());
-                //System.out.println(player.getyPos());
-                break;
-            }
-            //System.out.println("ok");
-        }
-    }
-    private boolean willWarp(PChar player, Warp warp)
-    {
-        return (player.getxPos() == warp.getxPos()) && (player.getyPos() == warp.getyPos());
-    }
-
 }

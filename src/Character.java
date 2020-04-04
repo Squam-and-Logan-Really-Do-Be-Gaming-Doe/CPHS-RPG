@@ -4,17 +4,14 @@ public class Character extends Thing {
     private String textPath;
     private String voicePath;
     private Stats stats;
+
+    //<editor-fold desc="Constructors">
     public Character(int x, int y, String image, String direction) {
         super(x, y, 1, image);
         this.direction = direction;
         extensionAndPath();
     }
-    public Character(int x, int y, String image, String direction, String text) {
-        super(x, y, 1, image);
-        this.direction = direction;
-        textPath = "Data/Speech/" + text;
-        extensionAndPath();
-    }
+
     public Character(int x, int y, String image, String direction, String text, String voice) {
         super(x, y, 1, image);
         this.direction = direction;
@@ -22,6 +19,7 @@ public class Character extends Thing {
         voicePath = "Data/Voice/" + voice + ".wav";
         extensionAndPath();
     }
+    //</editor-fold>
 
     //<editor-fold desc="Gets And Sets">
     public String getDirection() {
@@ -51,6 +49,10 @@ public class Character extends Thing {
     public void setStats(Stats stats) {
         this.stats = stats;
     }
+
+    public String getVoicePath() {
+        return voicePath;
+    }
     //</editor-fold>
 
     private void extensionAndPath()
@@ -65,6 +67,7 @@ public class Character extends Thing {
         else if(frame == 1) frame = 0;
     }
 
+    //<editor-fold desc="Drawing Methods">
     @Override
     public void draw(int scale) {
         setExtension(getFrame() + getDirection() + getExtension());
@@ -79,8 +82,5 @@ public class Character extends Thing {
         super.draw(getxPos()*scale+scale/2+xMin*scale,getyPos()*scale+scale/2+yMin*scale,scale, getFilePath() + getImage() + getExtension());
         extensionAndPath();
     }
-
-    public String getVoicePath() {
-        return voicePath;
-    }
+    //</editor-fold>
 }
