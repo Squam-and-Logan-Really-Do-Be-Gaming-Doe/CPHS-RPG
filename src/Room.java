@@ -38,7 +38,7 @@ public class Room {
         //15 x - spaces in a room
         //9 y - spaces in a room
         for (Tile temp : tiles) {
-            temp.draw(scale, (15.0-maxs[0])/2, (8.0-maxs[1])/2);
+            temp.draw(scale, centerX(maxs[0]), centerY(maxs[1]));
         }
         drawNPCs(scale, maxs);
     }
@@ -111,12 +111,21 @@ public class Room {
     }
 
 
-    private void drawNPCs(int scale, int[] mins)
+    private void drawNPCs(int scale, int[] maxs)
     {
         for (Character guy : NPCs) {
             //System.out.println(guy.getxPos() + ", " + guy.getyPos() + " vs " + ((15.0-mins[0])/2)*guy.getxPos());
-            guy.draw(scale, (15.0-mins[0])/2, (8.0-mins[1])/2);
+            guy.draw(scale, centerX(maxs[0]), centerY(maxs[1]));
         }
+    }
+
+    public static double centerX(double maxX)
+    {
+        return (15.0-maxX)/2;
+    }
+    public static double centerY(double maxY)
+    {
+        return (8.0-maxY)/2;
     }
 
     public void animate()

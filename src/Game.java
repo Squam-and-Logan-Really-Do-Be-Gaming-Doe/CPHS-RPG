@@ -168,8 +168,8 @@ public class Game {
                 StdDraw.clear();
                 cRoom.drawRoom();
             }
-            int[] mins = cRoom.getMaxPos();
-            player.draw(scale, (15.0-mins[0])/2, (8.0-mins[1])/2);
+            int[] maxs = cRoom.getMaxPos();
+            player.draw(scale, Room.centerX(maxs[0]), Room.centerY(maxs[1]));
             yopoC = press;
             //TextHandler.drawFrame();
             if(cRoom.getWarps() != null)
