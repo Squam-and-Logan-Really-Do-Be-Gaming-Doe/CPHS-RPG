@@ -266,8 +266,8 @@ public class Game {
                 //System.out.println("i am a here");
                 this.cRoom = scanRoom(warp.getNewRoom());
                 StdDraw.clear();
-                cRoom.drawBG();
-                cRoom.drawRoom();
+                this.cRoom.drawBG();
+                this.cRoom.drawRoom();
                 player.setxPos(warp.getNewX());
                 //System.out.println(player.getxPos());
                 player.setyPos(warp.getNewY());
