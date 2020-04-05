@@ -26,20 +26,17 @@ public class TextHandler {
                 {
                     String newFace = reader.nextLine().substring(1);
                     if(!face.equals("")) {
-                        if (face.equals(newFace)) {
-                            continue;
-                        } else {
+                        if (!face.equals(newFace)) {
                             face = newFace;
                             triangleAndWait();
                             texts = initializeTexts();
-                            continue;
                         }
                     }
                     else
                     {
                         face = newFace;
-                        continue;
                     }
+                    continue;
                 }
                 if(chara.equals("\n")) index ++;
                 else
@@ -120,23 +117,8 @@ public class TextHandler {
         drawFrame();
         drawText(texts);
         for (int i = 0; i < 50; i+=10) {
-            for (int j = 1; j < texts.length; j++) {
-
-
-                if (texts[j] != (null)) {
-                    StdDraw.textLeft(250, 160 - (40 * j)+i, texts[j]);
-                }
-
-            }
-            StdDraw.show();
-            if(!StdDraw.isKeyPressed(Game.confirm)) {
-                Game.goodSleep();
-            }
-            //StdDraw.clear();
-            //drawBG(bg);
-            //drawPortraits();
+            stupidLoop(texts, i);
             drawFrame();
-            //nameBox(name);
         }
         if (texts.length - 1 >= 0) System.arraycopy(texts, 1, texts, 0, texts.length - 1);
         texts[texts.length-1] = "";
@@ -149,28 +131,29 @@ public class TextHandler {
         drawFace(face, 0);
         drawText(texts);
         for (int i = 0; i < 50; i+=10) {
-            for (int j = 1; j < texts.length; j++) {
-
-
-                if (texts[j] != (null)) {
-                    StdDraw.textLeft(250, 160 - (40 * j)+i, texts[j]);
-                }
-
-            }
-            StdDraw.show();
-            if(!StdDraw.isKeyPressed(Game.confirm)) {
-                Game.goodSleep();
-            }
-            //StdDraw.clear();
-            //drawBG(bg);
-            //drawPortraits();
+            stupidLoop(texts, i);
             drawFrame();
             drawFace(face, 0);
-            //nameBox(name);
         }
         if (texts.length - 1 >= 0) System.arraycopy(texts, 1, texts, 0, texts.length - 1);
         texts[texts.length-1] = "";
 
+    }
+
+    private static void stupidLoop(String[] texts, int i)
+    {
+        for (int j = 1; j < texts.length; j++) {
+
+
+            if (texts[j] != (null)) {
+                StdDraw.textLeft(250, 160 - (40 * j)+i, texts[j]);
+            }
+
+        }
+        StdDraw.show();
+        if(!StdDraw.isKeyPressed(Game.confirm)) {
+            Game.goodSleep();
+        }
     }
 
     //</editor-fold>
