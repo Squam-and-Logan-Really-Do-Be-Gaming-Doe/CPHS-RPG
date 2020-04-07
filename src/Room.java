@@ -1,6 +1,3 @@
-import sun.net.sdp.SdpSupport;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Room {
@@ -54,18 +51,18 @@ public class Room {
     {
         if(bg != null)
         {
-            StdDraw.picture((Game.xSize)/2,(Game.ySize)/2,"Data/BG/" + bg, Game.xSize, Game.ySize);
+            StdDraw.picture((Game.xSize)/2.0,(Game.ySize)/2.0,"Data/BG/" + bg, Game.xSize, Game.ySize);
             //StdDraw.setPenColor(Color.black);
         }
     }
 
     public static double centerX(double maxX)
     {
-        return ((Game.xSize/Game.scale)-maxX-1)/2;
+        return ((Game.xSize/(double)Game.scale)-maxX-1)/2;
     }
     public static double centerY(double maxY)
     {
-        return ((Game.ySize/Game.scale)-maxY-1)/2;
+        return ((Game.ySize/(double)Game.scale)-maxY-1)/2;
     }
 
     public void animate()

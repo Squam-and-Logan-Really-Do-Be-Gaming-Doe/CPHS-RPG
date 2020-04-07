@@ -47,7 +47,7 @@ public class TextHandler {
                 }
                 if(chara.equals("φ"))
                 {
-                    voice = reader.nextLine().substring(1);
+                    voice = "Data/Voice/" + reader.nextLine().substring(1) + ".wav";
                     continue;
                 }
                 if(chara.equals("\n")) index ++;

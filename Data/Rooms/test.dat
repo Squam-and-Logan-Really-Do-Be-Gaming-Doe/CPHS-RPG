@@ -8,7 +8,7 @@ floor 2 7
 floor 2 8
 Δ Chars
 testy 0 0 D deepVoice testroom/00.txt
-testy 3 4 R medVoice testroom/00.txt
+testy 3 4 R medVoice testroom/01.txt
 testy 2 0 L null
 testy 2 1 L null
 Δ Warps

@@ -43,16 +43,6 @@ public class Sounds {
 
     public static void textBlip()
     {
-        /*
-        //double freq = 440.0;
-        double freq = (Math.random()*200)+400;
-        //44100
-        for (int i = 0; i <= StdAudio.SAMPLE_RATE; i++) {
-            StdAudio.play(0.5 * Math.sin(2*Math.PI * freq * i / StdAudio.SAMPLE_RATE));
-        }
-        StdAudio.close();
-        System.out.println("nae");
-         */
         StdAudio.play("Data/Voice/deepVoice.wav");
     }
     public static void textBlip(String voice)
