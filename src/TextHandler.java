@@ -11,6 +11,7 @@ public class TextHandler {
     public static void textRead(String filePath, String voice)
     {
         try {
+            //<editor-fold desc="Variable Setup">
             Scanner reader = new Scanner(new File(filePath));
             drawFrame();
             reader.useDelimiter("");
@@ -19,9 +20,11 @@ public class TextHandler {
             int flip = 0;
             String face = "";
             String[] texts = initializeTexts();
+            //</editor-fold>
             while(reader.hasNext())
             {
                 String chara = reader.next();
+                //<editor-fold desc="Checking Character">
                 if(chara.equals("Δ"))
                 {
                     String newFace = reader.nextLine().substring(1);
@@ -30,6 +33,10 @@ public class TextHandler {
                             face = newFace;
                             triangleAndWait();
                             texts = initializeTexts();
+                            index = 0;
+                            drawFrame();
+                            drawFace(face, 0);
+                            drawText(texts);
                         }
                     }
                     else
@@ -38,11 +45,17 @@ public class TextHandler {
                     }
                     continue;
                 }
+                if(chara.equals("φ"))
+                {
+                    voice = reader.nextLine().substring(1);
+                    continue;
+                }
                 if(chara.equals("\n")) index ++;
                 else
                 {
                     texts[index] += chara;
                 }
+                //</editor-fold>
                 if(index >= 4)
                 {
                     if(face.equals(""))
@@ -50,7 +63,9 @@ public class TextHandler {
                     else textUp(texts,face);
                     index--;
                 }
-                if(chara.equals("!") || chara.equals(".") ||chara.equals(" ")) flip = 0;
+                //<editor-fold desc="Flip And Face And Sounds">
+                boolean punctuation = (chara.equals("!") || chara.equals(".") ||chara.equals(" ") || chara.equals("\n") || chara.equals(",") || chara.equals("?"));
+                if(punctuation) flip = 0;
                 drawFace(face, flip);
                 if(flip == 0) flip =1;
                 else flip = 0;
@@ -59,16 +74,17 @@ public class TextHandler {
                     Game.goodSleep();
                     Game.goodSleep();
                 }
-                if(!chara.equals("!") && !chara.equals(".") && !chara.equals(" ") && count%2==0)
+                if(!punctuation && count%2==0)
                 {
                     Sounds.textBlip(voice);
                 }
                 count++;
+                //</editor-fold>
 
                 StdDraw.show();
 
             }
-            if(!face.equals("")) drawFace(face, 0);
+            drawFace(face, 0);
             triangleAndWait();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -87,7 +103,11 @@ public class TextHandler {
 
     private static void drawFace(String face, int open)
     {
-        StdDraw.picture(120,100, "Data/Faces/" + face + open +  ".png", 150, 150);
+        try{
+            StdDraw.picture(120,100, "Data/Faces/" + face + open +  ".png", 150, 150);
+        }
+        catch (Exception ignored) {
+        }
     }
 
     private static void triangleAndWait()
