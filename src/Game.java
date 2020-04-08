@@ -52,6 +52,7 @@ public class Game {
     //<editor-fold desc="UI Methods">
     private void titleScreen()
     {
+        StdDraw.clear();
         music.changeSong("Snow-Halation.wav");
         StdDraw.setPenColor(Color.black);
         StdDraw.text(640,360, "CPHS-RPG");
@@ -65,6 +66,7 @@ public class Game {
 
         }
         //fileSelect();
+        Sounds.sfx("Selected.wav");
         selectMenu();
     }
     private void selectMenu()
@@ -74,6 +76,7 @@ public class Game {
         boolean yopoU = false;
         boolean yopoD = false;
         boolean yopoC = true;
+        boolean yopoB = true;
         int selector = 0;
         while(true)
         {
@@ -81,12 +84,15 @@ public class Game {
             StdDraw.text(640,300,"File Select");
             StdDraw.text(640,275, "Options");
             if(StdDraw.isKeyPressed(confirm) && !yopoC) break;
+            if(StdDraw.isKeyPressed(cancel) && !yopoB) break;
             if(StdDraw.isKeyPressed(up) && !yopoU)
             {
+                Sounds.sfx("Selector.wav");
                 selector-=1;
             }
             else if(StdDraw.isKeyPressed(down) && !yopoD)
             {
+                Sounds.sfx("Selector.wav");
                 selector+=1;
             }
             if(selector<0) selector = 1;
@@ -95,11 +101,20 @@ public class Game {
             yopoC = StdDraw.isKeyPressed(confirm);
             yopoD = StdDraw.isKeyPressed(down);
             yopoU = StdDraw.isKeyPressed(up);
+            yopoB = StdDraw.isKeyPressed(cancel);
             StdDraw.show();
             StdDraw.clear();
         }
-        if(selector == 0) fileSelect();
-        else if (selector == 1)optionMenu();
+        if(StdDraw.isKeyPressed(confirm)) {
+            Sounds.sfx("Selected.wav");
+            if (selector == 0) fileSelect();
+            else if (selector == 1) optionMenu();
+        }
+        else
+        {
+            Sounds.sfx("Cancel.wav");
+            titleScreen();
+        }
     }
     private void optionMenu()
     {
@@ -119,8 +134,16 @@ public class Game {
             String yRat = getRightRatio(ratios,index,1);
             StdDraw.text(640,360, "Screen-Size:");
             StdDraw.textLeft(715, 360, xRat + " x " + yRat);
-            if(StdDraw.isKeyPressed(left) && !yopoL) index--;
-            if(StdDraw.isKeyPressed(right) && !yopoR) index++;
+            if(StdDraw.isKeyPressed(left) && !yopoL)
+            {
+                Sounds.sfx("Selector.wav");
+                index--;
+            }
+            if(StdDraw.isKeyPressed(right) && !yopoR)
+            {
+                Sounds.sfx("Selector.wav");
+                index++;
+            }
             if(index < 0) index = ratios.length-1;
             if(index > ratios.length-1) index = 0;
 
@@ -133,9 +156,14 @@ public class Game {
             StdDraw.show();
             StdDraw.clear();
         }
-        if(StdDraw.isKeyPressed(cancel)) selectMenu();
+        if(StdDraw.isKeyPressed(cancel))
+        {
+            Sounds.sfx("Cancel.wav");
+            selectMenu();
+        }
         else if(StdDraw.isKeyPressed(confirm))
         {
+            Sounds.sfx("Selected.wav");
             int xRat = Integer.parseInt(getRightRatio(ratios,index,0));
             int yRat = Integer.parseInt(getRightRatio(ratios,index,1));
             StdDraw.setCanvasSize(xRat, yRat);
@@ -247,7 +275,11 @@ public class Game {
             StdDraw.show();
             StdDraw.clear();
         }
-        if(StdDraw.isKeyPressed(cancel))titleScreen();
+        if(StdDraw.isKeyPressed(cancel))
+        {
+            Sounds.sfx("Cancel.wav");
+            titleScreen();
+        }
         Sounds.sfx("Selected.wav");
         //System.out.println("break");
         if(files[selector].equals("New File"))
