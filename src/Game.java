@@ -1,3 +1,4 @@
+import javax.xml.stream.util.StreamReaderDelegate;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,7 +64,112 @@ public class Game {
             if (StdDraw.isKeyPressed(confirm)) break;
 
         }
-        fileSelect();
+        //fileSelect();
+        selectMenu();
+    }
+    private void selectMenu()
+    {
+        StdDraw.clear();
+        StdDraw.setPenColor(Color.black);
+        boolean yopoU = false;
+        boolean yopoD = false;
+        boolean yopoC = true;
+        int selector = 0;
+        while(true)
+        {
+            StdDraw.text(640,360, "CPHS-RPG");
+            StdDraw.text(640,300,"File Select");
+            StdDraw.text(640,275, "Options");
+            if(StdDraw.isKeyPressed(confirm) && !yopoC) break;
+            if(StdDraw.isKeyPressed(up) && !yopoU)
+            {
+                selector-=1;
+            }
+            else if(StdDraw.isKeyPressed(down) && !yopoD)
+            {
+                selector+=1;
+            }
+            if(selector<0) selector = 1;
+            if(selector>1) selector = 0;
+            StdDraw.text(500,300-(selector*25), ">");
+            yopoC = StdDraw.isKeyPressed(confirm);
+            yopoD = StdDraw.isKeyPressed(down);
+            yopoU = StdDraw.isKeyPressed(up);
+            StdDraw.show();
+            StdDraw.clear();
+        }
+        if(selector == 0) fileSelect();
+        else if (selector == 1)optionMenu();
+    }
+    private void optionMenu()
+    {
+        int index = 0;
+        String[] ratios = aspectRatios();
+        StdDraw.clear();
+        boolean yopoL = false;
+        boolean yopoR = false;
+        boolean yopoS = true;
+        boolean yopoC = true;
+
+        while (true)
+        {
+            if((StdDraw.isKeyPressed(confirm) && !yopoS) || (StdDraw.isKeyPressed(cancel) && !yopoC)) break;
+            //System.out.println(index);
+            String xRat = getRightRatio(ratios,index,0);
+            String yRat = getRightRatio(ratios,index,1);
+            StdDraw.text(640,360, "Screen-Size:");
+            StdDraw.textLeft(715, 360, xRat + " x " + yRat);
+            if(StdDraw.isKeyPressed(left) && !yopoL) index--;
+            if(StdDraw.isKeyPressed(right) && !yopoR) index++;
+            if(index < 0) index = ratios.length-1;
+            if(index > ratios.length-1) index = 0;
+
+            yopoC = StdDraw.isKeyPressed(cancel);
+            yopoS = StdDraw.isKeyPressed(confirm);
+            yopoL = StdDraw.isKeyPressed(left);
+            yopoR = StdDraw.isKeyPressed(right);
+
+            goodSleep();
+            StdDraw.show();
+            StdDraw.clear();
+        }
+        if(StdDraw.isKeyPressed(cancel)) selectMenu();
+        else if(StdDraw.isKeyPressed(confirm))
+        {
+            int xRat = Integer.parseInt(getRightRatio(ratios,index,0));
+            int yRat = Integer.parseInt(getRightRatio(ratios,index,1));
+            StdDraw.setCanvasSize(xRat, yRat);
+            //System.out.println(StdDraw.getFont().getSize());
+            int oldX = Integer.parseInt(getRightRatio(ratios,0,0));
+            double scale = xRat/(double)oldX;
+            Font oldFont = StdDraw.getFont();
+            int newSize = (int) Math.round(oldFont.getSize()*scale);
+            StdDraw.setFont(new Font(oldFont.getName(),oldFont.getStyle(),newSize));
+            StdDraw.enableDoubleBuffering();
+            StdDraw.setXscale(0,xSize);
+            StdDraw.setYscale(0,ySize);
+            StdDraw.show();
+            selectMenu();
+        }
+
+    }
+    private String getRightRatio(String[] ratios, int index, int xOrY)
+    {
+        if(xOrY == 0)
+        {
+            return (ratios[index].substring(0,ratios[index].indexOf("x")));
+        }
+        if(xOrY == 1)
+        {
+            return (ratios[index].substring(ratios[index].indexOf("x")+1));
+        }
+        return "7";
+    }
+
+    private String[] aspectRatios()
+    {
+        return new String[]{"768x432","1024x576","1152x648","1280x720","1366x768",
+                "1600x900","1920x1080","2560x1440","3840x2160"};
     }
 
     public static void loadingScreen()
