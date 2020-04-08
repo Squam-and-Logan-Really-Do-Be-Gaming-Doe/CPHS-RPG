@@ -314,7 +314,37 @@ public class Game {
             nameChapter = file.nextLine();
             timeFrame = file.nextLine();
             cRoom = scanRoom(file.nextLine());
-            player = new PChar(0,1,"testy", "U");
+            player = new PChar(file.nextInt(),file.nextInt(),"testy", "U");
+            file.nextLine();
+            player.setName(file.nextLine());
+            int numPoke = file.nextInt();
+            file.nextLine();
+            Pokemon[] pokes = new Pokemon[numPoke];
+            for (int i = 0; i < numPoke; i++) {
+                String name = file.nextLine();
+                String temp = file.nextLine();
+                String stats;
+                //System.out.println(name + " " + temp);
+                if(temp.split(" ").length == 7)
+                {
+                    stats = temp;
+                }
+                else
+                {
+                    stats = file.nextLine();
+                }
+                int moveNum = Integer.parseInt(file.nextLine());
+                Move[] moves = new Move[moveNum];
+                for (int j = 0; j < moveNum; j++) {
+                    moves[j] = new Move(file.nextLine());
+                }
+                if(temp.equals(name)) pokes[i] = new Pokemon(stats, name, moves);
+                else {
+                    pokes[i] = new Pokemon(stats, name, moves, temp);
+                }
+            }
+            player.setPokemons(pokes);
+            //System.out.println(player.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,6 @@ public class Character extends Thing {
     private int frame;
     private String textPath;
     private String voicePath;
-    private Stats stats;
 
     //<editor-fold desc="Constructors">
     public Character(int x, int y, String image, String direction) {
@@ -42,14 +41,6 @@ public class Character extends Thing {
         this.textPath = textPath;
     }
 
-    public Stats getStats() {
-        return stats;
-    }
-
-    public void setStats(Stats stats) {
-        this.stats = stats;
-    }
-
     public String getVoicePath() {
         return voicePath;
     }
@@ -79,7 +70,7 @@ public class Character extends Thing {
     {
         setExtension(getFrame() + getDirection() + getExtension());
         //System.out.println(getExtension());
-        super.draw(getxPos()*scale+scale/2+xMin*scale,getyPos()*scale+scale/2+yMin*scale,scale, getFilePath() + getImage() + getExtension());
+        super.draw(getxPos()*scale+scale/2.0+xMin*scale,getyPos()*scale+scale/2.0+yMin*scale,scale, getFilePath() + getImage() + getExtension());
         extensionAndPath();
     }
     //</editor-fold>

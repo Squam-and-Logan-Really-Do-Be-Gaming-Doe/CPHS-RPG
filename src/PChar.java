@@ -1,10 +1,32 @@
+import java.util.Arrays;
+
 public class PChar extends Character {
+    private String name;
     private boolean moving;
     private double movFactor;
+    private Pokemon[] pokemons;
+
     public PChar(int x, int y, String image, String direction) {
         super(x, y, image, direction); moving = false;
     }
 
+    public Pokemon[] getPokemons() {
+        return pokemons;
+    }
+
+    public void setPokemons(Pokemon[] pokemons) {
+        this.pokemons = pokemons;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //<editor-fold desc="Movement">
     public boolean moveIt(Room cRoom)
     {
         if(!moving)
@@ -212,6 +234,9 @@ public class PChar extends Character {
             }
         }
     }
+    //</editor-fold>
+
+
 
     @Override
     public void draw(int scale)
@@ -231,4 +256,14 @@ public class PChar extends Character {
         super.draw(modX*scale+scale/2.0+xMin*scale,modY*scale+scale/2.0+yMin*scale,scale, getFilePath() + getImage() + getFrame() + getDirection()+ getExtension());
     }
 
+
+    @Override
+    public String toString() {
+        return "PChar{" +
+                "name='" + name + '\'' +
+                ", moving=" + moving +
+                ", movFactor=" + movFactor +
+                ", pokemons=" + Arrays.toString(pokemons) +
+                '}';
+    }
 }
