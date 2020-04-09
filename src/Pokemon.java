@@ -22,6 +22,14 @@ public class Pokemon extends Stats{
         this.moves = moves;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Pokemon{" +

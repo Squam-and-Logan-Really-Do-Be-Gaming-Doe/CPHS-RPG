@@ -47,7 +47,7 @@ public class Sounds {
     }
     public static void textBlip(String voice)
     {
-        StdAudio.play(voice);
+        if(!voice.equals(""))StdAudio.play(voice);
     }
 
 }

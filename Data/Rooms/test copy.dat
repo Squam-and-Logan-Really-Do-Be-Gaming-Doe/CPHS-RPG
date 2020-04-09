@@ -2,7 +2,7 @@
 β cedarpark.jpg
 α grid floor 0 0 4 8
 Δ Chars
-testy 0 0 D null
+testy 0 0 D medVoice testroom/02.txt
 testy 2 0 L null
 Δ Warps
 1 0 2 7 test

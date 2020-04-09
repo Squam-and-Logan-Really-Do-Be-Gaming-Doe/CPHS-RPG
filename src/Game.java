@@ -25,7 +25,7 @@ public class Game {
     private int chapter;
     private String nameChapter;
     private String timeFrame;
-    private PChar player;
+    private static PChar player;
     private static Music music;
     //</editor-fold>
 
@@ -556,5 +556,9 @@ public class Game {
 
     public static int getScale() {
         return scale;
+    }
+
+    public static PChar getPlayer() {
+        return player;
     }
 }

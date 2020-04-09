@@ -10,85 +10,91 @@ public class TextHandler {
     }
     public static void textRead(String filePath, String voice)
     {
-        try {
-            //<editor-fold desc="Variable Setup">
-            Scanner reader = new Scanner(new File(filePath));
-            drawFrame();
-            reader.useDelimiter("");
-            int index = 0;
-            int count = 0;
-            int flip = 0;
-            String face = "";
-            String[] texts = initializeTexts();
-            //</editor-fold>
-            while(reader.hasNext())
+        //<editor-fold desc="Variable Setup">
+        Scanner reader;
+        try{reader = new Scanner(new File(filePath));}
+        catch (Exception ignored)
+        {
+            reader = new Scanner(filePath);
+        }
+        drawFrame();
+        reader.useDelimiter("");
+        int index = 0;
+        int count = 0;
+        int flip = 0;
+        String face = "";
+        String[] texts = initializeTexts();
+        //</editor-fold>
+        while(reader.hasNext())
+        {
+            String chara = reader.next();
+            //<editor-fold desc="Checking Character">
+            if(chara.equals("Δ"))
             {
-                String chara = reader.next();
-                //<editor-fold desc="Checking Character">
-                if(chara.equals("Δ"))
-                {
-                    String newFace = reader.nextLine().substring(1);
-                    if(!face.equals("")) {
-                        if (!face.equals(newFace)) {
-                            face = newFace;
-                            triangleAndWait();
-                            texts = initializeTexts();
-                            index = 0;
-                            drawFrame();
-                            drawFace(face, 0);
-                            drawText(texts);
-                        }
-                    }
-                    else
-                    {
+                String newFace = reader.nextLine().substring(1);
+                if(!face.equals("")) {
+                    if (!face.equals(newFace)) {
                         face = newFace;
+                        triangleAndWait();
+                        texts = initializeTexts();
+                        index = 0;
+                        drawFrame();
+                        drawFace(face, 0);
+                        drawText(texts);
                     }
-                    continue;
                 }
-                if(chara.equals("φ"))
-                {
-                    voice = "Data/Voice/" + reader.nextLine().substring(1) + ".wav";
-                    continue;
-                }
-                if(chara.equals("\n")) index ++;
                 else
                 {
-                    texts[index] += chara;
+                    face = newFace;
                 }
-                //</editor-fold>
-                if(index >= 4)
-                {
-                    if(face.equals(""))
-                    textUp(texts);
-                    else textUp(texts,face);
-                    index--;
-                }
-                //<editor-fold desc="Flip And Face And Sounds">
-                boolean punctuation = (chara.equals("!") || chara.equals(".") ||chara.equals(" ") || chara.equals("\n") || chara.equals(",") || chara.equals("?"));
-                if(punctuation) flip = 0;
-                drawFace(face, flip);
-                if(flip == 0) flip =1;
-                else flip = 0;
-                drawText(texts);
-                if(!StdDraw.isKeyPressed(Game.confirm)) {
-                    Game.goodSleep();
-                    Game.goodSleep();
-                }
-                if(!punctuation && count%2==0)
-                {
-                    Sounds.textBlip(voice);
-                }
-                count++;
-                //</editor-fold>
-
-                StdDraw.show();
-
+                continue;
             }
-            drawFace(face, 0);
-            triangleAndWait();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            if(chara.equals("φ"))
+            {
+                voice = "Data/Voice/" + reader.nextLine().substring(1) + ".wav";
+                continue;
+            }
+            if(chara.equals("β"))
+            {
+                BattleHandler battle = new BattleHandler(reader.nextLine().substring(1));
+                continue;
+            }
+            if(chara.equals("\n")) index ++;
+            else
+            {
+                texts[index] += chara;
+            }
+            //</editor-fold>
+            if(index >= 4)
+            {
+                if(face.equals(""))
+                textUp(texts);
+                else textUp(texts,face);
+                index--;
+            }
+            //<editor-fold desc="Flip And Face And Sounds">
+            boolean punctuation = (chara.equals("!") || chara.equals(".") ||chara.equals(" ") || chara.equals("\n") || chara.equals(",") || chara.equals("?"));
+            if(punctuation) flip = 0;
+            drawFace(face, flip);
+            if(flip == 0) flip =1;
+            else flip = 0;
+            drawText(texts);
+            if(!StdDraw.isKeyPressed(Game.confirm)) {
+                Game.goodSleep();
+                Game.goodSleep();
+            }
+            if(!punctuation && count%2==0)
+            {
+                Sounds.textBlip(voice);
+            }
+            count++;
+            //</editor-fold>
+
+            StdDraw.show();
+
         }
+        drawFace(face, 0);
+        triangleAndWait();
     }
 
     //<editor-fold desc="Drawing Methods">
