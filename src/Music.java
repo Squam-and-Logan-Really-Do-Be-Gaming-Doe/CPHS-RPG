@@ -215,4 +215,27 @@ public class Music
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    public String getSong()
+    {
+        return filePath;
+    }
+
+    public Long getMusicTime()
+    {
+        return this.clip.getMicrosecondPosition();
+    }
+
+    public void resumeOldSong(String oldSong, Long position)
+    {
+        filePath = oldSong;
+        try{initializer();
+            jump(position);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 }
