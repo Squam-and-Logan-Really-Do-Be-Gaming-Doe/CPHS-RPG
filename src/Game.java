@@ -561,4 +561,8 @@ public class Game {
     public static PChar getPlayer() {
         return player;
     }
+
+    public static Music getMusic() {
+        return music;
+    }
 }
