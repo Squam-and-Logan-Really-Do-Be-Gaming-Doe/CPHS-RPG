@@ -26,6 +26,7 @@ public class Stats {
 
     private int[] stats;
     private int exp;
+    private int cHP;
     //private int[] growths;
 
     /*public Stats(int[] stats, int[] growths) {
@@ -42,6 +43,7 @@ public class Stats {
         for (int i = 0; i < stats.length; i++) {
             stats[i] = info.nextInt();
         }
+        cHP = getHP();
     }
 
     public Stats() {
@@ -100,8 +102,11 @@ public class Stats {
     public int getDef(){return stats[3];}
     public int getCoolPow(){return stats[4];}
     public int getCoolDef(){return stats[5];}
-    public int getCoolSpeed(){return stats[6];}
+    public int getSpeed(){return stats[6];}
 
+    public int getCHP() {
+        return cHP;
+    }
     public int getExp() {
         return exp;
     }
