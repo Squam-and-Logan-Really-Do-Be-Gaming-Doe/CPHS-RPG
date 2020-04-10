@@ -50,4 +50,9 @@ public class Sounds {
         if(!voice.equals(""))StdAudio.play(voice);
     }
 
+    public static void cry(String poke)
+    {
+        StdAudio.play("Data/Battling/Pokemon/" + poke + "/cry.wav");
+    }
+
 }
