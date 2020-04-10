@@ -30,6 +30,10 @@ public class Pokemon extends Stats{
         return name;
     }
 
+    public Move[] getMoves() {
+        return moves;
+    }
+
     @Override
     public String toString() {
         return "Pokemon{" +
@@ -98,6 +102,18 @@ class Move
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getcUses() {
+        return cUses;
+    }
+
+    public int getMaxUses() {
+        return maxUses;
     }
 
     @Override

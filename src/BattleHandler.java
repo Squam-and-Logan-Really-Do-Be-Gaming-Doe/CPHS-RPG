@@ -129,10 +129,7 @@ public class BattleHandler {
         TextHandler.textRead("What will you do? ", sysVoice);
         int xInd = 0;
         int yInd = 1;
-        boolean yopoU = false;
-        boolean yopoD = false;
-        boolean yopoL = false;
-        boolean yopoR = false;
+        boolean[] yopos = new boolean[4];
         boolean yopoC = true;
         while(true)
         {
@@ -144,25 +141,116 @@ public class BattleHandler {
             StdDraw.text(880, 65, "RUN");
             StdDraw.text(350+(xInd*480),65+(yInd*70),">");
 
-            if(StdDraw.isKeyPressed(Game.up) && !yopoU) yInd++;
-            if(StdDraw.isKeyPressed(Game.down)&& !yopoD) yInd--;
-            if(StdDraw.isKeyPressed(Game.right)&& !yopoR) xInd++;
-            if(StdDraw.isKeyPressed(Game.left)&& !yopoL) xInd--;
+            int[] nums = gridSelect(xInd,yInd,yopos[0],yopos[1],yopos[2],yopos[3]);
+            xInd = nums[0];
+            yInd = nums[1];
 
-            if(yInd > 1) yInd = 0;
-            if(yInd < 0 ) yInd = 1;
-            if(xInd > 1) xInd = 0;
-            if(xInd < 0) xInd = 1;
-
-            yopoU = StdDraw.isKeyPressed(Game.up);
-            yopoD = StdDraw.isKeyPressed(Game.down);
-            yopoR = StdDraw.isKeyPressed(Game.right);
-            yopoL = StdDraw.isKeyPressed(Game.left);
+            yopos = yopoEr();
             yopoC = StdDraw.isKeyPressed(Game.confirm);
 
             StdDraw.show();
             Game.goodSleep();
         }
+        Sounds.sfx("Selected.wav");
+        if(xInd == 0 && yInd == 1)
+        {
+            moveMenu();
+        }
+
+
+    }
+
+    private void moveMenu()
+    {
+        TextHandler.drawFrame();
+        StdDraw.setPenColor(Color.black);
+        Move[] moves = friends[youInd].getMoves();
+
+        boolean[] yopos = new boolean[4];
+        boolean yopoC = true;
+        boolean yopoCancel = true;
+        int xInd = 0;
+        int yInd = 1;
+
+        while(true) {
+            TextHandler.drawFrame();
+            for (int i = 0; i < moves.length; i++) {
+                int xLoc = 400 + ((i % 2) * 440);
+                int yLoc;
+                if (i < 2) {
+                    yLoc = 135;
+                } else {
+                    yLoc = 65;
+                }
+                StdDraw.text(xLoc, yLoc, moves[i].getName());
+                StdDraw.text(xLoc, yLoc - 25, moves[i].getcUses() + "/" + moves[i].getMaxUses());
+            }
+            if(moves.length < 2) {
+                xInd = 0;
+                yInd = 0;
+            }
+            if(moves.length< 3 && yInd ==0)
+            {
+                yInd = 1;
+            }
+            if(moves.length<4 && xInd == 1 && yInd == 0)
+            {
+                xInd = 0;
+            }
+
+            StdDraw.text(350+(xInd*425),65+(yInd*70),">");
+            int[] nums = gridSelect(xInd,yInd,yopos[0],yopos[1],yopos[2],yopos[3]);
+            xInd = nums[0];
+            yInd = nums[1];
+
+            yopos = yopoEr();
+            yopoC = StdDraw.isKeyPressed(Game.confirm);
+
+            StdDraw.show();
+            Game.goodSleep();
+        }
+    }
+
+    private boolean[] yopoEr()
+    {
+        return new boolean[]{StdDraw.isKeyPressed(Game.up),StdDraw.isKeyPressed(Game.down),
+                StdDraw.isKeyPressed(Game.left), StdDraw.isKeyPressed(Game.right)};
+    }
+
+    private int[] gridSelect(int xInd, int yInd, boolean yopoU, boolean yopoD, boolean yopoL, boolean yopoR)
+    {
+        boolean up = StdDraw.isKeyPressed(Game.up);
+        boolean down = StdDraw.isKeyPressed(Game.down);
+        boolean left = StdDraw.isKeyPressed(Game.left);
+        boolean right = StdDraw.isKeyPressed(Game.right);
+
+        if(up && !yopoU)
+        {
+            Sounds.sfx("Selector.wav");
+            yInd++;
+        }
+        if(down && !yopoD)
+        {
+            Sounds.sfx("Selector.wav");
+            yInd--;
+        }
+        if(right && !yopoR)
+        {
+            Sounds.sfx("Selector.wav");
+            xInd++;
+        }
+        if(left && !yopoL)
+        {
+            Sounds.sfx("Selector.wav");
+            xInd--;
+        }
+
+        if(yInd > 1) yInd = 0;
+        if(yInd < 0 ) yInd = 1;
+        if(xInd > 1) xInd = 0;
+        if(xInd < 0) xInd = 1;
+
+        return new int[]{xInd, yInd};
     }
 
     private void bothInfo()
@@ -211,7 +299,7 @@ public class BattleHandler {
     {
         if(whoWent[0] && !whoWent[1]) return false;
         if(!whoWent[0] && whoWent[1]) return true;
-        boolean[] speeds = mostSpeed();
+        //boolean[] speeds = mostSpeed();
         if(!whoWent[0] && !whoWent[1])
         {
             return mostSpeed()[0];
