@@ -56,7 +56,12 @@ public class TextHandler {
             }
             if(chara.equals("β"))
             {
-                BattleHandler battle = new BattleHandler(reader.nextLine().substring(1));
+                triangleAndWait();
+                new BattleHandler(reader.nextLine().substring(1));
+                drawFrame();
+                texts = initializeTexts();
+                drawFace(face, 0);
+                index = 0;
                 continue;
             }
             if(chara.equals("\n")) index ++;
@@ -89,7 +94,6 @@ public class TextHandler {
             }
             count++;
             //</editor-fold>
-
             StdDraw.show();
 
         }
@@ -99,7 +103,7 @@ public class TextHandler {
 
     //<editor-fold desc="Drawing Methods">
 
-    private static void drawFrame()
+    public static void drawFrame()
     {
         StdDraw.setPenColor(Color.WHITE);
         StdDraw.filledRectangle(640,100,640,100);
