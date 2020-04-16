@@ -45,10 +45,15 @@ public class Stats {
         }
         cHP = getHP();
     }
-
     public Stats() {
         this.stats = new int[7];
         //this.growths = new int[stats.length];
+    }
+
+    public void takeDamage(int damage)
+    {
+        cHP -= damage;
+        if (cHP < 0) cHP = 0;
     }
 
     /*public boolean[] levelUP()

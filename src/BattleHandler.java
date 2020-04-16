@@ -120,10 +120,33 @@ public class BattleHandler {
         Game.goodSleep();
         //displayInfo();
         bothInfo();
-        if(isYourTurn()) battleMenu();
+        //if(isYourTurn()) battleMenu();
+        handling();
         endBattle();
     }
 
+    private void handling()
+    {
+        while(!allDead(foes) && !allDead(friends))
+        {
+            if(isYourTurn()) battleMenu();
+            else
+            {
+                cpuDecision();
+            }
+        }
+    }
+
+    private boolean allDead(Pokemon[] pokes)
+    {
+        for (Pokemon poke :
+                pokes) {
+            if(poke.getCHP() != 0) return false;
+        }
+        return true;
+    }
+
+    //<editor-fold desc="Selector UI">
     private void battleMenu()
     {
         TextHandler.textRead("What will you do? ", sysVoice);
@@ -173,6 +196,8 @@ public class BattleHandler {
         int yInd = 1;
 
         while(true) {
+            if(StdDraw.isKeyPressed(Game.confirm) && !yopoC) break;
+            if(StdDraw.isKeyPressed(Game.cancel) && !yopoCancel) break;
             TextHandler.drawFrame();
             for (int i = 0; i < moves.length; i++) {
                 int xLoc = 400 + ((i % 2) * 440);
@@ -205,10 +230,25 @@ public class BattleHandler {
 
             yopos = yopoEr();
             yopoC = StdDraw.isKeyPressed(Game.confirm);
-
+            yopoCancel = StdDraw.isKeyPressed(Game.cancel);
             StdDraw.show();
             Game.goodSleep();
         }
+        if(StdDraw.isKeyPressed(Game.cancel)) battleMenu();
+        else
+        {
+            int move = 0;
+            if(xInd == 0 && yInd == 1) move = 0;
+            else if(xInd == 1 && yInd == 1) move = 1;
+            else if(xInd == 0 && yInd == 0) move = 2;
+            else if(xInd == 1 && yInd == 0) move = 3;
+
+            moves[move].use(friends[youInd],foes[foeInd]);
+            bothInfo();
+            //moveMenu();
+            whoWent[0] = true;
+        }
+
     }
 
     private boolean[] yopoEr()
@@ -252,11 +292,14 @@ public class BattleHandler {
 
         return new int[]{xInd, yInd};
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Character Info">
     private void bothInfo()
     {
         displayInfo(friends[youInd], 0);
         displayInfo(foes[foeInd], 1);
+        StdDraw.show();
     }
 
     private void displayInfo(Pokemon poke, int whomst)
@@ -284,17 +327,18 @@ public class BattleHandler {
         int foeHP = poke.getCHP();
         int foeMax = poke.getHP();
         StdDraw.text(centerX,centerY+(rectHet)*.10, "" + foeHP + "/" + foeMax);
-        double perecntage = foeHP/(double)foeMax;
+        double percentage = foeHP/(double)foeMax;
         StdDraw.setPenColor(Color.black);
         StdDraw.filledRectangle(centerX, centerY-(rectHet*.50), rectWid*.90, rectHet*.16);
         StdDraw.setPenColor(Color.green);
-        if(perecntage < .5) StdDraw.setPenColor(Color.yellow);
-        if(perecntage < .25) StdDraw.setPenColor(Color.red);
-        double invert = 1-perecntage;
-        StdDraw.filledRectangle(centerX-(invert*centerX), centerY-(rectHet*.50), rectWid*.90, rectHet*.15);
+        if(percentage < .5) StdDraw.setPenColor(Color.yellow);
+        if(percentage < .25) StdDraw.setPenColor(Color.red);
+        StdDraw.filledRectangle(centerX-((rectWid*.90)-(rectWid*.90*percentage)), centerY-(rectHet*.50), rectWid*.90*percentage, rectHet*.15);
     }
+    //</editor-fold>
 
 
+    //<editor-fold desc="Game Logic">
     private boolean isYourTurn()
     {
         if(whoWent[0] && !whoWent[1]) return false;
@@ -315,6 +359,16 @@ public class BattleHandler {
         if(youSpeed == foeSpeed) return new boolean[]{true, true};
         if(youSpeed > foeSpeed) return new boolean[]{true, false};
         return new boolean[]{false, true};
+    }
+    //</editor-fold>
+
+    private void cpuDecision()
+    {
+        Move[] moves = foes[foeInd].getMoves();
+        int rando = (int)((Math.random())*moves.length-1);
+        moves[rando].use(foes[foeInd], friends[youInd]);
+        whoWent[1] = true;
+        bothInfo();
     }
 
     private void endBattle()

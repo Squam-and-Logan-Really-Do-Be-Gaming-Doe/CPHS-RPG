@@ -22,6 +22,7 @@ public class Pokemon extends Stats{
         this.moves = moves;
     }
 
+    //<editor-fold desc="Gets">
     public String getNickName() {
         return nickName;
     }
@@ -42,11 +43,13 @@ public class Pokemon extends Stats{
                 ", moves=" + Arrays.toString(moves) +
                 '}';
     }
+    //</editor-fold>
 }
 
 class Move
 {
-    private String name;
+    //<editor-fold desc="Variables">
+    private final String name;
     private String type;
     private int cUses;
     private int maxUses;
@@ -54,6 +57,7 @@ class Move
     private int power;
     private int accuracy;
     private boolean[] targets; //0 yourself 1 enemy
+    //</editor-fold>
     /*
     Move Types:
     0. Attacking
@@ -104,6 +108,7 @@ class Move
         }
     }
 
+    //<editor-fold desc="gets">
     public String getName() {
         return name;
     }
@@ -114,6 +119,31 @@ class Move
 
     public int getMaxUses() {
         return maxUses;
+    }
+    //</editor-fold>
+
+    public void use(Pokemon user, Pokemon victim)
+    {
+        if(cUses == 0)
+        {
+            struggle(user, victim);
+            return;
+        }
+        TextHandler.textRead(user.getName() + " uses " + name, "Data/Voice/medVoice.wav");
+        cUses--;
+        int damage = 0;
+        switch (movType)
+        {
+            //attacking
+            case(0):
+                damage = ((((2*user.getLevel())/5+2)*power*(user.getPow()/victim.getDef()))/50+2);
+        }
+        victim.takeDamage(damage);
+
+    }
+    public void struggle(Pokemon user, Pokemon victim)
+    {
+
     }
 
     @Override
