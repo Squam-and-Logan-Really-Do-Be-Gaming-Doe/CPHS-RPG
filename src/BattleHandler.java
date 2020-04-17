@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class BattleHandler {
@@ -243,7 +244,9 @@ public class BattleHandler {
             else if(xInd == 0 && yInd == 0) move = 2;
             else if(xInd == 1 && yInd == 0) move = 3;
 
+            int oldHP = foes[foeInd].getCHP();
             moves[move].use(friends[youInd],foes[foeInd]);
+            animateInfo(foes[foeInd], oldHP, foes[foeInd].getCHP(), 1);
             bothInfo();
             //moveMenu();
             whoWent[0] = true;
@@ -295,6 +298,18 @@ public class BattleHandler {
     //</editor-fold>
 
     //<editor-fold desc="Character Info">
+    private void animateInfo(Pokemon poke, int oldHealth, int newHealth, int whomst)
+    {
+        for (int i = 0; i <= oldHealth-newHealth; i++) {
+            poke.setcHP(oldHealth-i);
+            displayInfo(poke, whomst);
+            StdDraw.show();
+            Game.goodSleep();
+        }
+        poke.setcHP(newHealth);
+        displayInfo(poke, whomst);
+    }
+
     private void bothInfo()
     {
         displayInfo(friends[youInd], 0);
@@ -365,14 +380,23 @@ public class BattleHandler {
     private void cpuDecision()
     {
         Move[] moves = foes[foeInd].getMoves();
-        int rando = (int)((Math.random())*moves.length-1);
+        //System.out.println(Arrays.toString(moves));
+        //System.out.println(moves.length-1);
+        //int rando = (int)((Math.random())*moves.length-1);
+        int rando = Game.goodRandom(moves.length-1, 0);
+        //System.out.println(rando);
+        int oldHP = friends[youInd].getCHP();
         moves[rando].use(foes[foeInd], friends[youInd]);
+        animateInfo(friends[youInd], oldHP, friends[youInd].getCHP(), 0 );
         whoWent[1] = true;
         bothInfo();
     }
 
     private void endBattle()
     {
+        for (Pokemon poke: friends) {
+            poke.resetBuffs();
+        }
         music.resumeOldSong(oldSong, oldPos);
     }
 

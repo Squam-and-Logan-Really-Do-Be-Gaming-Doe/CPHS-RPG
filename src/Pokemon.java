@@ -129,14 +129,22 @@ class Move
             struggle(user, victim);
             return;
         }
-        TextHandler.textRead(user.getName() + " uses " + name, "Data/Voice/medVoice.wav");
+        TextHandler.textRead(user.getName() + " uses " + name + "!", "Data/Voice/medVoice.wav");
         cUses--;
         int damage = 0;
         switch (movType)
         {
             //attacking
             case(0):
-                damage = ((((2*user.getLevel())/5+2)*power*(user.getPow()/victim.getDef()))/50+2);
+                damage = (int) Math.round((((2*user.getLevel())/5.0+2)*power*((user.getBuffedPow()*1.0)/victim.getBuffedDef()))/50.0+2);
+                break;
+            case(1):
+                System.out.println(power);
+                if(!victim.buffStat(power, 2))
+                {
+                    TextHandler.textRead("But there was no effect!","Data/Voice/medVoice.wav" );
+                }
+                return;
         }
         victim.takeDamage(damage);
 

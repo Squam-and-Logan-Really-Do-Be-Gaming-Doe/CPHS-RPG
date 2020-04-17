@@ -565,4 +565,11 @@ public class Game {
     public static Music getMusic() {
         return music;
     }
+
+    public static int goodRandom(int max, int min)
+    {
+        int range = max-min+1;
+        int rand = (int)(Math.random() * range) + min;
+        return rand;
+    }
 }

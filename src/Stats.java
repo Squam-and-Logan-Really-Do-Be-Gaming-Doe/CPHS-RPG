@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Stats {
@@ -25,6 +26,7 @@ public class Stats {
 
 
     private int[] stats;
+    private int[] buffs;
     private int exp;
     private int cHP;
     //private int[] growths;
@@ -43,11 +45,18 @@ public class Stats {
         for (int i = 0; i < stats.length; i++) {
             stats[i] = info.nextInt();
         }
+        buffs = new int[7];
+        Arrays.fill(buffs, 0);
         cHP = getHP();
     }
     public Stats() {
         this.stats = new int[7];
         //this.growths = new int[stats.length];
+    }
+
+    public void setcHP(int cHP1)
+    {
+        cHP = cHP1;
     }
 
     public void takeDamage(int damage)
@@ -115,4 +124,41 @@ public class Stats {
     public int getExp() {
         return exp;
     }
+
+    public int getBuffedPow(){return buffs[2]+getPow();}
+    public int getBuffedDef(){return buffs[3]+getDef();}
+    public int getBuffedCoolPow(){return buffs[4]+getCoolPow();}
+    public int getBuffedCoolDef(){return buffs[5]+getCoolDef();}
+    public int getBuffedSpeed(){return buffs[6]+getSpeed();}
+
+    public void resetBuffs()
+    {
+        Arrays.fill(buffs, 0);
+    }
+
+    public boolean buffPow(int buff)
+    {
+        //System.out.println(getPow());
+        buffs[2] += (int)(Math.round(buff/4.5*getPow()));
+        System.out.println(buffs[2]);
+        return threshHold(2);
+
+    }
+    public boolean buffStat(int buff, int stat)
+    {
+        buffs[stat] += (int)(Math.round(buff/4.5*stats[stat]));
+        return threshHold(stat);
+    }
+
+    private boolean threshHold(int stat)
+    {
+        int threshHold = 1;
+        if(buffs[stat] + stats[stat] <threshHold)
+        {
+            buffs[stat] = Math.negateExact(stats[stat])+threshHold;
+            return false;
+        }
+        return true;
+    }
+
 }
