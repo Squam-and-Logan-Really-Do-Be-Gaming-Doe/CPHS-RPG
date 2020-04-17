@@ -139,7 +139,7 @@ class Move
                 damage = (int) Math.round((((2*user.getLevel())/5.0+2)*power*((user.getBuffedPow()*1.0)/victim.getBuffedDef()))/50.0+2);
                 break;
             case(1):
-                System.out.println(power);
+                //System.out.println(power);
                 if(!victim.buffStat(power, 2))
                 {
                     TextHandler.textRead("But there was no effect!","Data/Voice/medVoice.wav" );

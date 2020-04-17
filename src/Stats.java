@@ -140,7 +140,7 @@ public class Stats {
     {
         //System.out.println(getPow());
         buffs[2] += (int)(Math.round(buff/4.5*getPow()));
-        System.out.println(buffs[2]);
+        //System.out.println(buffs[2]);
         return threshHold(2);
 
     }
