@@ -13,6 +13,7 @@ public class Game {
 
     public static final int confirm = 88;
     public static final int cancel = 90;
+    public static final int start = 10;
     public static final int up = 38;
     public static final int down = 40;
     public static final int left = 37;
@@ -108,7 +109,11 @@ public class Game {
         if(StdDraw.isKeyPressed(confirm)) {
             Sounds.sfx("Selected.wav");
             if (selector == 0) fileSelect();
-            else if (selector == 1) optionMenu();
+            else if (selector == 1)
+            {
+               Menu.optionMenu();
+                selectMenu();
+            }
         }
         else
         {
@@ -116,90 +121,6 @@ public class Game {
             titleScreen();
         }
     }
-    private void optionMenu()
-    {
-        int index = 0;
-        String[] ratios = aspectRatios();
-        StdDraw.clear();
-        boolean yopoL = false;
-        boolean yopoR = false;
-        boolean yopoS = true;
-        boolean yopoC = true;
-
-        while (true)
-        {
-            if((StdDraw.isKeyPressed(confirm) && !yopoS) || (StdDraw.isKeyPressed(cancel) && !yopoC)) break;
-            //System.out.println(index);
-            String xRat = getRightRatio(ratios,index,0);
-            String yRat = getRightRatio(ratios,index,1);
-            StdDraw.text(640,360, "Screen-Size:");
-            StdDraw.textLeft(715, 360, xRat + " x " + yRat);
-            if(StdDraw.isKeyPressed(left) && !yopoL)
-            {
-                Sounds.sfx("Selector.wav");
-                index--;
-            }
-            if(StdDraw.isKeyPressed(right) && !yopoR)
-            {
-                Sounds.sfx("Selector.wav");
-                index++;
-            }
-            if(index < 0) index = ratios.length-1;
-            if(index > ratios.length-1) index = 0;
-
-            yopoC = StdDraw.isKeyPressed(cancel);
-            yopoS = StdDraw.isKeyPressed(confirm);
-            yopoL = StdDraw.isKeyPressed(left);
-            yopoR = StdDraw.isKeyPressed(right);
-
-            goodSleep();
-            StdDraw.show();
-            StdDraw.clear();
-        }
-        if(StdDraw.isKeyPressed(cancel))
-        {
-            Sounds.sfx("Cancel.wav");
-            selectMenu();
-        }
-        else if(StdDraw.isKeyPressed(confirm))
-        {
-            Sounds.sfx("Selected.wav");
-            int xRat = Integer.parseInt(getRightRatio(ratios,index,0));
-            int yRat = Integer.parseInt(getRightRatio(ratios,index,1));
-            StdDraw.setCanvasSize(xRat, yRat);
-            //System.out.println(StdDraw.getFont().getSize());
-            int oldX = Integer.parseInt(getRightRatio(ratios,0,0));
-            double scale = xRat/(double)oldX;
-            Font oldFont = StdDraw.getFont();
-            int newSize = (int) Math.round(oldFont.getSize()*scale);
-            StdDraw.setFont(new Font(oldFont.getName(),oldFont.getStyle(),newSize));
-            StdDraw.enableDoubleBuffering();
-            StdDraw.setXscale(0,xSize);
-            StdDraw.setYscale(0,ySize);
-            StdDraw.show();
-            selectMenu();
-        }
-
-    }
-    private String getRightRatio(String[] ratios, int index, int xOrY)
-    {
-        if(xOrY == 0)
-        {
-            return (ratios[index].substring(0,ratios[index].indexOf("x")));
-        }
-        if(xOrY == 1)
-        {
-            return (ratios[index].substring(ratios[index].indexOf("x")+1));
-        }
-        return "7";
-    }
-
-    private String[] aspectRatios()
-    {
-        return new String[]{"768x432","1024x576","1152x648","1280x720","1366x768",
-                "1600x900","1920x1080","2560x1440","3840x2160"};
-    }
-
     public static void loadingScreen()
     {
         StdDraw.clear();
@@ -386,9 +307,19 @@ public class Game {
         StdDraw.show();
         int frame = 0;
         boolean yopoC = false;
+        boolean yopoStart = false;
         while(true)
         {
             boolean press = StdDraw.isKeyPressed(Game.confirm);
+            boolean start = StdDraw.isKeyPressed(Game.start);
+            //System.out.println(start);
+            if(start && !yopoStart)
+            {
+                Menu.startMenu();
+                cRoom.drawBG();
+                cRoom.drawRoom();
+
+            }
             if (frame == 30)
             {
                 frame = 0;
@@ -411,6 +342,7 @@ public class Game {
             int[] maxs = cRoom.getMaxPos();
             player.draw(scale, Room.centerX(maxs[0]), Room.centerY(maxs[1]));
             yopoC = press;
+            yopoStart = start;
             //TextHandler.drawFrame();
             if(cRoom.getWarps() != null)
             {
