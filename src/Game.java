@@ -23,9 +23,10 @@ public class Game {
 
 
     private Room cRoom;
-    private int chapter;
-    private String nameChapter;
-    private String timeFrame;
+    private static int saveSlot;
+    private static int chapter;
+    private static String nameChapter;
+    private static String timeFrame;
     private static PChar player;
     private static Music music;
     //</editor-fold>
@@ -207,7 +208,9 @@ public class Game {
         {
             fileSetup(selector);
         }
+        //System.out.println(selector);
         fileRead(selector);
+        //System.out.println(saveSlot);
         //scanRoom("test");
     }
 
@@ -227,6 +230,7 @@ public class Game {
 
     private void fileRead(int slot)
     {
+        saveSlot = slot;
         try {
             Scanner file = new Scanner(new File("Data/Saves/save" + slot + ".dat"));
             file.next();
@@ -315,6 +319,7 @@ public class Game {
             //System.out.println(start);
             if(start && !yopoStart)
             {
+                player.setRoomName(cRoom.getName());
                 Menu.startMenu();
                 cRoom.drawBG();
                 cRoom.drawRoom();
@@ -478,6 +483,7 @@ public class Game {
             if(!warpA.isEmpty()) newRoom.setWarps(warpA);
             fRoom.close();
             //newRoom.determineScroll();
+            newRoom.setName(roomName);
             return newRoom;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -496,6 +502,22 @@ public class Game {
 
     public static Music getMusic() {
         return music;
+    }
+
+    public static int getChapter() {
+        return chapter;
+    }
+
+    public static String getNameChapter() {
+        return nameChapter;
+    }
+
+    public static String getTimeFrame() {
+        return timeFrame;
+    }
+
+    public static int getSaveSlot() {
+        return saveSlot;
     }
 
     public static int goodRandom(int max, int min)

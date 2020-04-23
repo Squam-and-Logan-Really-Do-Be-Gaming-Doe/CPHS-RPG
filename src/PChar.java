@@ -5,6 +5,8 @@ public class PChar extends Character {
     private boolean moving;
     private double movFactor;
     private Pokemon[] pokemons;
+    private String roomName;
+
 
     public PChar(int x, int y, String image, String direction) {
         super(x, y, image, direction); moving = false;
@@ -24,6 +26,14 @@ public class PChar extends Character {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
     //<editor-fold desc="Movement">

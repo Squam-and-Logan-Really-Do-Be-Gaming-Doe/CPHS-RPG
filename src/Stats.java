@@ -80,36 +80,6 @@ public class Stats {
     }
 
      */
-
-    /*
-    public int getLevel()
-    {
-        return stats[0];
-    }
-    public int getHP()
-    {
-        return stats[1];
-    }
-    public int getSP()
-    {
-        return stats[2];
-    }
-    public int getPow()
-    {
-        return stats[3];
-    }
-    public int getDef()
-    {
-        return stats[4];
-    }
-    public int getSpeed(){
-        return stats[5];
-    }
-    public int getLuck(){
-        return stats[6];
-    }
-     */
-
     public int getLevel(){return stats[0];}
     public int getHP(){return stats[1];}
     public int getPow(){return stats[2];}
@@ -159,6 +129,12 @@ public class Stats {
             return false;
         }
         return true;
+    }
+
+    public String asString()
+    {
+        return "" + getLevel() + " " +  getHP() + " " + getPow() + " " + getDef() + " " +
+                getCoolPow() + " " + getCoolDef() + " " + getSpeed();
     }
 
 }

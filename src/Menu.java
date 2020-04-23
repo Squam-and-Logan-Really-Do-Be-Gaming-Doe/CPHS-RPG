@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Menu {
     private static final int xLoc = 1100;
@@ -12,6 +14,7 @@ public class Menu {
     //640 and 80??
     public static void startMenu()
     {
+        Sounds.sfx("menuOpen.wav");
         int selector = 0;
 
         boolean yopoU = false;
@@ -24,8 +27,16 @@ public class Menu {
             if(StdDraw.isKeyPressed(Game.cancel) && !yopoCan) return;
             if(StdDraw.isKeyPressed(Game.confirm)) break;
 
-            if(StdDraw.isKeyPressed(Game.up) && !yopoU) selector -=1;
-            if(StdDraw.isKeyPressed(Game.down) && !yopoD) selector +=1;
+            if(StdDraw.isKeyPressed(Game.up) && !yopoU)
+            {
+                selector -=1;
+                Sounds.sfx("selector.wav");
+            }
+            if(StdDraw.isKeyPressed(Game.down) && !yopoD)
+            {
+                selector +=1;
+                Sounds.sfx("selector.wav");
+            }
 
             if(selector > 4) selector = 0;
             if(selector < 0) selector = 4;
@@ -38,6 +49,12 @@ public class Menu {
             StdDraw.show();
             Game.goodSleep();
 
+        }
+        Sounds.sfx("selected.wav");
+
+        if(selector == 3)
+        {
+            save();
         }
 
         if(selector == 4)
@@ -97,6 +114,75 @@ public class Menu {
             }
         }
 
+    }
+
+    private static void save()
+    {
+        int choice = TextHandler.choice("Would you like to save your game?;YES;NO", "Data/Voice/medVoice.wav");
+        if(choice == 0)
+        {
+            TextHandler.textRead("Now saving, please do not turn the power off bro", "Data/Voice/medVoice.wav");
+            saveFileWrite();
+        }
+        else
+        {
+            TextHandler.textRead("Ok well fine then have it your way", "Data/Voice/medVoice.wav");
+        }
+    }
+
+    private static void saveFileWrite()
+    {
+            try {
+                File file = new File("Data/Saves/save" + Game.getSaveSlot() + ".dat");
+
+                //Create the file
+                if (file.createNewFile()) {
+                    System.out.println("File is created!");
+                } else {
+                    System.out.println("File already exists.");
+                }
+
+                //Write Content
+                PChar player = Game.getPlayer();
+                FileWriter writer = new FileWriter(file);
+                writer.write("Chapter " + Game.getChapter());
+                writer.write("\n");
+                writer.write(Game.getNameChapter());
+                writer.write("\n");
+                writer.write(Game.getTimeFrame());
+                writer.write("\n");
+                writer.write(player.getRoomName());
+                writer.write("\n");
+                writer.write(player.getxPos() + " " + player.getyPos());
+                writer.write("\n");
+                writer.write(player.getName());
+                writer.write("\n");
+                writer.write("" + player.getPokemons().length);
+                //System.out.println("len is " + player.getPokemons().length);
+                //writer.write(player.getPokemons().length);
+                writer.write("\n");
+                for (int i = 0; i < player.getPokemons().length; i++) {
+                    Pokemon poke = player.getPokemons()[i];
+                    writer.write(poke.getName());
+                    writer.write("\n");
+                    writer.write(poke.getNickName());
+                    writer.write("\n");
+                    writer.write(poke.asString());
+                    writer.write("\n");
+                    int moves = poke.getMoves().length;
+                    writer.write("" + moves);
+                    //System.out.println("moves are " + moves);
+                    writer.write("\n");
+                    for (int j = 0; j < moves; j++) {
+                        Move mov = poke.getMoves()[j];
+                        writer.write(mov.getName());
+                        writer.write("\n");
+                    }
+                }
+                writer.close();
+            } catch (Exception e) {
+                System.out.println("dang you really do be not working doe");
+            }
     }
 
     //<editor-fold desc="Options">

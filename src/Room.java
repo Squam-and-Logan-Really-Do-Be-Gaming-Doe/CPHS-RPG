@@ -5,6 +5,7 @@ public class Room {
     private ArrayList<Character> NPCs;
     private Warp[] warps;
     private String bg;
+    private String name;
     /*
     private boolean scrollX;
     private boolean scrollY;
@@ -97,6 +98,14 @@ public class Room {
     public void setBg(String bg1)
     {
         bg = bg1;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     //<editor-fold desc="Max And Min">

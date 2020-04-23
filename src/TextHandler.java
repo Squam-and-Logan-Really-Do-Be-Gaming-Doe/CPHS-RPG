@@ -29,7 +29,7 @@ public class TextHandler {
         {
             String chara = reader.next();
             //<editor-fold desc="Checking Character">
-            if(chara.equals("Δ"))
+            if(chara.equals("Δ")) //face
             {
                 String newFace = reader.nextLine().substring(1);
                 if(!face.equals("")) {
@@ -49,12 +49,12 @@ public class TextHandler {
                 }
                 continue;
             }
-            if(chara.equals("φ"))
+            if(chara.equals("φ")) //voice
             {
                 voice = "Data/Voice/" + reader.nextLine().substring(1) + ".wav";
                 continue;
             }
-            if(chara.equals("β"))
+            if(chara.equals("β")) //battling
             {
                 triangleAndWait();
                 new BattleHandler(reader.nextLine().substring(1));
@@ -63,6 +63,10 @@ public class TextHandler {
                 drawFace(face, 0);
                 index = 0;
                 continue;
+            }
+            if(chara.equals("ζ")) //choice
+            {
+                choice(reader.nextLine().substring(1), voice);
             }
             if(chara.equals("\n")) index ++;
             else
@@ -99,6 +103,63 @@ public class TextHandler {
         }
         drawFace(face, 0);
         triangleAndWait();
+    }
+
+    public static int choice(String text, String voice)
+    {
+        String question = text.substring(0,text.indexOf(";"));
+        text = text.substring(text.indexOf(";")+1);
+        String[] choices = text.split(";");
+        Scanner reader = new Scanner(question);
+        reader.useDelimiter("");
+        drawFrame();
+        String[] texts = new String[1];
+        texts[0] = "";
+        while(reader.hasNext())
+        {
+            texts[0] += reader.next();
+            drawText(texts);
+            StdDraw.show();
+            if(texts[0].length() % 2 == 0) Sounds.textBlip(voice);
+            Game.goodSleep();
+        }
+
+        boolean yopoSel = true;
+        boolean yopoU = false;
+        boolean yopoD = false;
+        int choice = 0;
+        while (!StdDraw.isKeyPressed(Game.confirm) || yopoSel) {
+
+            if (StdDraw.isKeyPressed(Game.up) && !yopoU)
+            {
+                choice--;
+                Sounds.sfx("selector.wav");
+            }
+            if (StdDraw.isKeyPressed(Game.down) && !yopoD)
+            {
+                choice++;
+                Sounds.sfx("selector.wav");
+            }
+
+            if (choice > choices.length - 1) choice = 0;
+            if (choice < 0) choice = choices.length - 1;
+
+            drawFrame();
+            drawText(texts);
+            for (int i = 0; i < choices.length; i++) {
+                StdDraw.textRight(1240, 150 - (i * 40), choices[i]);
+            }
+            StdDraw.text(1150, 150 - (40 * choice), ">");
+
+            yopoSel = StdDraw.isKeyPressed(Game.confirm);
+            yopoU = StdDraw.isKeyPressed(Game.up);
+            yopoD = StdDraw.isKeyPressed(Game.down);
+            StdDraw.show();
+            Game.goodSleep();
+        }
+        Sounds.sfx("selected.wav");
+
+        return choice;
     }
 
     //<editor-fold desc="Drawing Methods">
